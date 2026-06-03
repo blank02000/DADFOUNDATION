@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "donation": {
+      "title": "Donation",
+      "description": "A record of a financial donation to the foundation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["one-time", "monthly"] },
+        "donorName": { "type": "string" },
+        "donorEmail": { "type": "string" },
+        "donorPhone": { "type": "string" },
+        "campaignId": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["pending", "success", "failed"] },
+        "paymentMethod": { "type": "string", "enum": ["Stripe", "PayPal", "Razorpay"] },
+        "taxReceiptNumber": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["amount", "type", "donorName", "donorEmail", "paymentStatus", "createdAt"]
+    },
+    "volunteer": {
+      "title": "Volunteer Application",
+      "description": "An application or active profile of a volunteer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "skills": { "type": "string" },
+        "areasOfInterest": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "appliedAt": { "type": "string", "format": "date-time" },
+        "hoursContributed": { "type": "number" }
+      },
+      "required": ["userId", "name", "email", "phone", "status", "appliedAt"]
+    },
+    "event": {
+      "title": "Event",
+      "description": "An upcoming community, clinic, or helper event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "location": { "type": "string" },
+        "image": { "type": "string" },
+        "category": { "type": "string" },
+        "registrants": { "type": "string" },
+        "capacity": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "date", "time", "location", "category", "createdAt"]
+    },
+    "blog": {
+      "title": "Blog Post",
+      "description": "An educational or update article on the foundation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "summary": { "type": "string" },
+        "category": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorId": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "summary", "category", "authorName", "authorId", "createdAt"]
+    },
+    "newsletter": {
+      "title": "Newsletter Subscription",
+      "description": "A subscribed email address for newsletter updates",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "subscribedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "subscribedAt"]
+    }
+  },
+  "firestore": {
+    "/donations/{donationId}": {
+      "schema": "donation",
+      "description": "Collection of all donor transactions"
+    },
+    "/volunteers/{volunteerId}": {
+      "schema": "volunteer",
+      "description": "Collection of volunteer profile data and applications"
+    },
+    "/events/{eventId}": {
+      "schema": "event",
+      "description": "Collection of upcoming volunteer or outreach events"
+    },
+    "/blogs/{blogId}": {
+      "schema": "blog",
+      "description": "Collection of learning hub articles"
+    },
+    "/newsletter/{newsletterId}": {
+      "schema": "newsletter",
+      "description": "Newsletter subscriber storage"
+    }
+  }
+}

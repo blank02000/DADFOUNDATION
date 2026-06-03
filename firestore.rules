@@ -1,0 +1,165 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'shiyadshubh2000@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Donations Collection
+    // Anyone can create if valid shape. Only admins can read/update/delete.
+    match /donations/{donationId} {
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(donationId) 
+                    && isValidDonation(incoming())
+                    && incoming().paymentStatus == 'pending'
+                    && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidDonation(incoming()) && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    function isValidDonation(data) {
+      return data.keys().hasAll(['amount', 'type', 'donorName', 'donorEmail', 'donorPhone', 'campaignId', 'paymentStatus', 'paymentMethod', 'createdAt'])
+             && data.keys().size() <= 11 // Allow Optional taxReceiptNumber
+             && data.amount is number
+             && data.amount > 0
+             && data.type in ['one-time', 'monthly']
+             && data.donorName is string && data.donorName.size() <= 128
+             && data.donorEmail is string && data.donorEmail.size() <= 128
+             && data.donorPhone is string && data.donorPhone.size() <= 64
+             && data.campaignId is string && data.campaignId.size() <= 128
+             && data.paymentStatus in ['pending', 'success', 'failed']
+             && data.paymentMethod in ['Stripe', 'PayPal', 'Razorpay']
+             && (!data.keys().hasAny(['taxReceiptNumber']) || data.taxReceiptNumber is string);
+    }
+
+    // 3. Volunteers Collection
+    // Authenticated users can create/read/update their own application. Admin can manage all.
+    match /volunteers/{volunteerId} {
+      allow get: if isAdmin() || (isSignedIn() && existing().userId == request.auth.uid);
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isValidId(volunteerId) 
+                    && isValidVolunteer(incoming())
+                    && incoming().userId == request.auth.uid
+                    && incoming().status == 'pending'
+                    && incoming().hoursContributed == 0
+                    && incoming().appliedAt == request.time;
+      allow update: if isAdmin() || (
+                      isSignedIn() 
+                      && existing().userId == request.auth.uid 
+                      && incoming().userId == request.auth.uid
+                      && incoming().status == existing().status // No status changes by user
+                      && incoming().hoursContributed == existing().hoursContributed // No hours changes by user
+                      && incoming().appliedAt == existing().appliedAt
+                      && isValidVolunteer(incoming())
+                    );
+      allow delete: if isAdmin();
+    }
+
+    function isValidVolunteer(data) {
+      return data.keys().hasAll(['userId', 'name', 'email', 'phone', 'skills', 'areasOfInterest', 'status', 'appliedAt', 'hoursContributed'])
+             && data.keys().size() == 9
+             && data.userId is string && data.userId.size() <= 128
+             && data.name is string && data.name.size() <= 128
+             && data.email is string && data.email.size() <= 128
+             && data.phone is string && data.phone.size() <= 64
+             && data.skills is string && data.skills.size() <= 1000
+             && data.areasOfInterest is string && data.areasOfInterest.size() <= 1000
+             && data.status in ['pending', 'approved', 'rejected']
+             && data.hoursContributed is number;
+    }
+
+    // 4. Events Collection
+    // Public can read. Admins can manage.
+    match /events/{eventId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(eventId) && isValidEvent(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidEvent(incoming()) && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    function isValidEvent(data) {
+      return data.keys().hasAll(['title', 'description', 'date', 'time', 'location', 'image', 'category', 'registrants', 'capacity', 'createdAt'])
+             && data.keys().size() == 10
+             && data.title is string && data.title.size() <= 256
+             && data.description is string && data.description.size() <= 4000
+             && data.date is string && data.date.size() <= 64
+             && data.time is string && data.time.size() <= 64
+             && data.location is string && data.location.size() <= 256
+             && data.image is string && data.image.size() <= 1000
+             && data.category is string && data.category.size() <= 128
+             && data.registrants is list // array of strings (registered emails)
+             && data.capacity is number
+             && data.createdAt is timestamp;
+    }
+
+    // 5. Blogs Collection
+    // Public can read. Admins can manage.
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(blogId) && isValidBlog(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidBlog(incoming()) && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    function isValidBlog(data) {
+      return data.keys().hasAll(['title', 'content', 'summary', 'category', 'authorName', 'authorId', 'image', 'createdAt'])
+             && data.keys().size() == 8
+             && data.title is string && data.title.size() <= 256
+             && data.content is string && data.content.size() <= 100000
+             && data.summary is string && data.summary.size() <= 1000
+             && data.category is string && data.category.size() <= 128
+             && data.authorName is string && data.authorName.size() <= 128
+             && data.authorId is string && data.authorId.size() <= 128
+             && data.image is string && data.image.size() <= 1000;
+    }
+
+    // 6. Newsletter Collection
+    // Anyone can subscribe. Only admin can read/manage.
+    match /newsletter/{newsletterId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isValidId(newsletterId) && isValidNewsletter(incoming()) && incoming().subscribedAt == request.time;
+    }
+
+    function isValidNewsletter(data) {
+      return data.keys().hasAll(['email', 'subscribedAt'])
+             && data.keys().size() == 2
+             && data.email is string && data.email.size() <= 128
+             && data.subscribedAt is timestamp;
+    }
+  }
+}

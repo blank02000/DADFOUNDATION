@@ -1,0 +1,6 @@
+{
+  "name": "DAD Foundation",
+  "description": "Providing quality healthcare, physical therapy, emotional wellness, and volunteer governance for differently abled individuals of all ages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
