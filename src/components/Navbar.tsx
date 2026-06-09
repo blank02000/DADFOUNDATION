@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { useFirebase } from './FirebaseProvider';
 import { Heart, LogIn, LogOut, Menu, X, ShieldAlert } from 'lucide-react';
+import { LogoIcon } from './Logo';
 
 interface NavbarProps {
   currentTab: string;
@@ -37,11 +38,10 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
         {/* Brand Logo */}
         <button 
           onClick={() => handleNav('home')} 
-          className="flex items-center gap-2.5 text-left cursor-pointer group"
+          className="flex items-center gap-3 text-left cursor-pointer group"
         >
-          <div className="relative p-2 bg-[#1B7330]/10 rounded-full group-hover:scale-105 transition-all duration-200">
-            <Heart className="w-5 h-5 text-[#1B7330] fill-[#1B7330]/20" />
-            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#0A2240]" />
+          <div className="p-0.5 bg-slate-50 border border-slate-100 rounded-full group-hover:scale-105 transition-all duration-200">
+            <LogoIcon size={44} className="w-11 h-11" />
           </div>
           <div>
             <span className="text-xl font-extrabold tracking-tight text-[#0A2240] block leading-none font-sans">

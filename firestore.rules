@@ -46,7 +46,7 @@ service cloud.firestore {
       allow list: if isAdmin();
       allow create: if isValidId(donationId) 
                     && isValidDonation(incoming())
-                    && incoming().paymentStatus == 'pending'
+                    && incoming().paymentStatus in ['pending', 'success']
                     && incoming().createdAt == request.time;
       allow update: if isAdmin() && isValidDonation(incoming()) && incoming().createdAt == existing().createdAt;
       allow delete: if isAdmin();

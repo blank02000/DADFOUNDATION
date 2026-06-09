@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { db, handleFirestoreError, OperationType } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { LogoIcon } from './Logo';
 import { 
   Heart, 
   MapPin, 
@@ -64,9 +65,9 @@ export function Footer({ setCurrentTab }: FooterProps) {
         
         {/* Column 1: Brand details & Newsletter (Lg: col-span-4) */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-[#1B7330]/20 rounded-full">
-              <Heart className="w-5 h-5 text-[#1B7330] fill-[#1B7330]/20" />
+          <div className="flex items-center gap-2.5">
+            <div className="p-0.5 bg-white/5 border border-white/10 rounded-full">
+              <LogoIcon size={38} className="w-9.5 h-9.5" />
             </div>
             <div>
               <span className="text-lg font-black tracking-wider text-white font-sans">

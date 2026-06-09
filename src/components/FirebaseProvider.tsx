@@ -58,8 +58,20 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async () => {
-    const result = await signInWithPopup(auth, googleProvider);
-    return result.user;
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      return result.user;
+    } catch (e: any) {
+      if (e?.code === 'auth/popup-closed-by-user' || e?.message?.includes('popup-closed-by-user')) {
+        console.warn('Google sign-in popup was closed by the user.');
+        return null as any;
+      }
+      if (e?.code === 'auth/cancelled-popup-request') {
+        console.warn('Google sign-in popup request cancelled.');
+        return null as any;
+      }
+      throw e;
+    }
   };
 
   const logout = async () => {
