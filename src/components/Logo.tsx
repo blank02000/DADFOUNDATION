@@ -15,7 +15,7 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
     <svg 
       width={size} 
       height={size} 
-      viewBox="0 0 500 500" 
+      viewBox="105 76 320 320" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -29,12 +29,12 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            C305 325, 360 282, 360 240 
            C360 205, 338 180, 308 180 
            C278 180, 250 220, 250 220 Z" 
-        fill="#1B7330" 
+        fill="#76B041" 
       />
 
       {/* Top Left Adult (Blue) */}
       {/* Head */}
-      <circle cx="180" cy="110" r="22" fill="#0A2240" />
+      <circle cx="180" cy="110" r="22" fill="#174A78" />
       {/* Body Curve */}
       <path 
         d="M198 126
@@ -42,12 +42,12 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            C120 270, 131 292, 146 308
            C134 268, 146 195, 204 150
            L198 126 Z" 
-        fill="#0A2240" 
+        fill="#174A78" 
       />
 
       {/* Top Right Adult (Green) */}
       {/* Head */}
-      <circle cx="340" cy="115" r="22" fill="#1B7330" />
+      <circle cx="340" cy="115" r="22" fill="#76B041" />
       {/* Body Curve */}
       <path 
         d="M322 124
@@ -55,12 +55,12 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            C410 295, 380 345, 320 375
            C375 325, 390 250, 340 160
            L322 124 Z" 
-        fill="#1B7330" 
+        fill="#76B041" 
       />
 
       {/* Wheelchair User (Blue) */}
       {/* Head */}
-      <circle cx="190" cy="225" r="17" fill="#0A2240" />
+      <circle cx="190" cy="225" r="17" fill="#174A78" />
       {/* Body/Torso and Seat */}
       <path 
         d="M178 245
@@ -76,7 +76,7 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            L190 286
            C180 282, 184 252, 194 252
            L178 245 Z" 
-        fill="#0A2240" 
+        fill="#174A78" 
       />
       {/* Wheelchair Wheel */}
       <path 
@@ -90,14 +90,14 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            C168 360, 180 372, 195 372
            C210 372, 222 360, 222 345
            C222 330, 210 318, 195 318 Z" 
-        fill="#0A2240" 
+        fill="#174A78" 
       />
       {/* Inner Wheel Hub */}
-      <circle cx="195" cy="345" r="7" fill="#0A2240" />
+      <circle cx="195" cy="345" r="7" fill="#174A78" />
 
       {/* Child (Blue) */}
       {/* Head */}
-      <circle cx="310" cy="270" r="15" fill="#0A2240" />
+      <circle cx="310" cy="270" r="15" fill="#174A78" />
       {/* Body Curve */}
       <path 
         d="M302 284
@@ -105,7 +105,7 @@ export function LogoIcon({ className = '', size = 40 }: LogoProps) {
            C305 360, 330 345, 345 315
            C332 310, 320 295, 314 288
            L302 284 Z" 
-        fill="#0A2240" 
+        fill="#174A78" 
       />
     </svg>
   );

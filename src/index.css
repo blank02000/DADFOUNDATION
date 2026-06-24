@@ -5,9 +5,13 @@
   --font-serif: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
   --font-script: "Caveat", cursive;
 
-  --color-bg: #F9FBFC;
-  --color-primary: #0A2240;
-  --color-secondary: #4A5D6E;
-  --color-ink: #0A2240;
-  --color-accent: #1B7330;
+  --color-bg: #F2F8FC;
+  --color-primary: #174A78;
+  --color-primary-dark: #123A5F;
+  --color-secondary: #5F6B73;
+  --color-ink: #1F2937;
+  --color-accent: #76B041;
+  --color-accent-dark: #5E962F;
+  --color-brand-light: #F2F8FC;
+  --color-brand-sage: #EAF4E3;
 }
