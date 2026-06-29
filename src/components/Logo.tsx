@@ -13,7 +13,7 @@ interface LogoProps {
 export function LogoIcon({ className = '', size = 40 }: LogoProps) {
   return (
     <img
-      src="https://prophish-uploads.s3.ap-south-1.amazonaws.com/Wallpapers/u9pya2wq/new%20logo.jpeg"
+      src="https://prophish-uploads.s3.ap-south-1.amazonaws.com/Wallpapers/aztyrikm/logov2.jpeg"
       alt="DAD Foundation Logo"
       width={size}
       height={size}
