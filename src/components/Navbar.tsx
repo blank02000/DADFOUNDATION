@@ -40,14 +40,14 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
           onClick={() => handleNav('home')} 
           className="flex items-center gap-3 text-left cursor-pointer group"
         >
-          <div className="p-0.5 bg-slate-50 border border-slate-100 rounded-full group-hover:scale-105 transition-all duration-200">
-            <LogoIcon size={44} className="w-11 h-11" />
+          <div className="p-0.5 bg-slate-50 border border-slate-100 rounded-full group-hover:scale-105 transition-all duration-200 shrink-0">
+            <LogoIcon size={46} className="w-11 h-11 md:w-12 md:h-12" />
           </div>
           <div>
-            <span className="text-xl font-extrabold tracking-tight text-[#0A2240] block leading-none font-sans">
-              DAD <span className="text-[#1B7330]">FOUNDATION</span>
+            <span className="text-lg md:text-xl font-extrabold tracking-tight text-[#0A2E5C] block leading-none font-sans">
+              DAD <span className="text-[#129E36]">FOUNDATION</span>
             </span>
-            <span className="text-[10px] uppercase font-bold text-[#1B7330] tracking-widest block mt-1">
+            <span className="text-[9px] md:text-[10px] uppercase font-bold text-[#129E36] tracking-widest block mt-1">
               Care. Support. Empower.
             </span>
           </div>
@@ -61,21 +61,21 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
               onClick={() => handleNav(link.id)}
               className={`font-semibold text-sm transition-all duration-200 cursor-pointer pb-1 relative ${
                 currentTab === link.id
-                  ? 'text-[#1B7330]'
-                  : 'text-[#4A5D6E] hover:text-[#0A2240]'
+                  ? 'text-[#129E36]'
+                  : 'text-[#5F6B73] hover:text-[#0A2E5C]'
               }`}
             >
               {link.label}
               {currentTab === link.id && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1B7330] rounded-full" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#129E36] rounded-full" />
               )}
             </button>
           ))}
           {isAdmin && (
             <button
               onClick={() => handleNav('admin')}
-              className={`font-semibold text-xs flex items-center gap-1 px-3 py-1 bg-[#1B7330]/10 text-[#1B7330] border border-[#1B7330]/20 rounded-full transition-all duration-200 cursor-pointer ${
-                currentTab === 'admin' ? 'ring-2 ring-[#1B7330]' : 'hover:bg-[#1B7330]/20'
+              className={`font-semibold text-xs flex items-center gap-1 px-3 py-1 bg-[#129E36]/10 text-[#129E36] border border-[#129E36]/20 rounded-full transition-all duration-200 cursor-pointer ${
+                currentTab === 'admin' ? 'ring-2 ring-[#129E36]' : 'hover:bg-[#129E36]/20'
               }`}
             >
               <ShieldAlert className="w-3.5 h-3.5" />
@@ -91,11 +91,11 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
               <img 
                 src={user.photoURL || 'https://lh3.googleusercontent.com/a/default-user'} 
                 alt={user.displayName || 'Donor'} 
-                className="w-8 h-8 rounded-full border-2 border-[#1B7330]/40"
+                className="w-8 h-8 rounded-full border-2 border-[#129E36]/40"
               />
               <button 
                 onClick={logout} 
-                className="flex items-center gap-1.5 text-xs font-semibold text-[#4A5D6E] hover:text-red-500 transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 text-xs font-semibold text-[#5F6B73] hover:text-red-500 transition-colors cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Sign Out
@@ -104,16 +104,16 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
           ) : (
             <button 
               onClick={login}
-              className="flex items-center gap-1.5 text-sm font-semibold text-[#0A2240] hover:text-[#1B7330] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-sm font-semibold text-[#0A2E5C] hover:text-[#129E36] transition-colors cursor-pointer"
             >
-              <LogIn className="w-4 h-4 text-[#1B7330]" />
+              <LogIn className="w-4 h-4 text-[#129E36]" />
               Sign In
             </button>
           )}
 
           <button 
             onClick={() => handleNav('donation')}
-            className="bg-[#1B7330] hover:bg-[#145A24] text-white px-6 py-2.5 rounded-full font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all duration-150 cursor-pointer hover:scale-[1.02]"
+            className="bg-[#129E36] hover:bg-[#0E7F2B] text-white px-6 py-2.5 rounded-full font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all duration-150 cursor-pointer hover:scale-[1.02]"
           >
             <Heart className="w-3.5 h-3.5 text-white/95 fill-transparent" />
             Donate Now
@@ -124,13 +124,13 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
         <div className="flex items-center gap-3 md:hidden">
           <button 
             onClick={() => handleNav('donation')}
-            className="bg-[#1B7330] hover:bg-[#145A24] text-white px-4 py-2 rounded-full font-bold text-xs shadow-sm cursor-pointer"
+            className="bg-[#129E36] hover:bg-[#0E7F2B] text-white px-4 py-2 rounded-full font-bold text-xs shadow-sm cursor-pointer"
           >
             Donate
           </button>
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            className="p-2 text-[#4A5D6E] hover:text-[#1B7330] focus:outline-none cursor-pointer"
+            className="p-2 text-[#5F6B73] hover:text-[#129E36] focus:outline-none cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -146,7 +146,7 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
                 key={link.id}
                 onClick={() => handleNav(link.id)}
                 className={`text-left font-bold text-base py-2 cursor-pointer ${
-                  currentTab === link.id ? 'text-[#1B7330] border-l-2 border-[#1B7330] pl-2' : 'text-[#4A5D6E]'
+                  currentTab === link.id ? 'text-[#129E36] border-l-2 border-[#129E36] pl-2' : 'text-[#5F6B73]'
                 }`}
               >
                 {link.label}
@@ -155,7 +155,7 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
             {isAdmin && (
               <button
                 onClick={() => handleNav('admin')}
-                className="text-left font-bold text-base py-2 text-[#1B7330] flex items-center gap-1.5 cursor-pointer"
+                className="text-left font-bold text-base py-2 text-[#129E36] flex items-center gap-1.5 cursor-pointer"
               >
                 <ShieldAlert className="w-5 h-5" />
                 Admin Dashboard
@@ -168,7 +168,7 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
                <div className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-2">
                   <img src={user.photoURL || ''} className="w-8 h-8 rounded-full" />
-                  <span className="text-sm font-semibold text-slate-750">{user.displayName}</span>
+                  <span className="text-sm font-semibold text-slate-700">{user.displayName}</span>
                 </div>
                 <button 
                   onClick={logout}
@@ -180,9 +180,9 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
             ) : (
               <button 
                 onClick={login}
-                className="text-left font-bold text-base py-2 text-[#0A2240] flex items-center gap-1.5 cursor-pointer"
+                className="text-left font-bold text-base py-2 text-[#0A2E5C] flex items-center gap-1.5 cursor-pointer"
               >
-                <LogIn className="w-5 h-5 text-[#1B7330]" /> Google Sign In
+                <LogIn className="w-5 h-5 text-[#129E36]" /> Google Sign In
               </button>
             )}
           </div>

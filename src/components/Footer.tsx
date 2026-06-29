@@ -60,7 +60,7 @@ export function Footer({ setCurrentTab }: FooterProps) {
   };
 
   return (
-    <footer className="bg-[#0A2240] text-slate-300 font-sans border-t border-slate-800">
+    <footer className="bg-[#0A2E5C] text-slate-300 font-sans border-t border-slate-800">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 px-6 py-16 max-w-7xl mx-auto">
         
         {/* Column 1: Brand details & Newsletter (Lg: col-span-4) */}
@@ -71,9 +71,9 @@ export function Footer({ setCurrentTab }: FooterProps) {
             </div>
             <div>
               <span className="text-lg font-black tracking-wider text-white font-sans">
-                DAD <span className="text-[#1B7330]">FOUNDATION</span>
+                DAD <span className="text-[#129E36]">FOUNDATION</span>
               </span>
-              <span className="text-[9px] block uppercase font-bold tracking-widest text-[#1B7330] mt-0.5">
+              <span className="text-[9px] block uppercase font-bold tracking-widest text-[#129E36] mt-0.5">
                 Care. Support. Empower.
               </span>
             </div>
@@ -93,12 +93,12 @@ export function Footer({ setCurrentTab }: FooterProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email Address"
-                  className="w-full bg-slate-900 border border-slate-800 rounded-l-xl pl-3 pr-10 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-[#1B7330]/50"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-l-xl pl-3 pr-10 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-[#129E36]/50"
                 />
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="bg-[#1B7330] hover:bg-[#145A24] px-3.5 rounded-r-xl transition-colors cursor-pointer text-white flex items-center justify-center"
+                  className="bg-[#129E36] hover:bg-[#0E7F2B] px-3.5 rounded-r-xl transition-colors cursor-pointer text-white flex items-center justify-center"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>
@@ -125,32 +125,32 @@ export function Footer({ setCurrentTab }: FooterProps) {
           </h4>
           <ul className="space-y-2 text-xs font-bold">
             <li>
-              <button onClick={() => setCurrentTab('about')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('about')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 About Us
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('programs')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('programs')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Our Services
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('impact')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('impact')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Our Impact
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('resources')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('resources')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Resources
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Get Involved
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('contact')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('contact')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Contact Us
               </button>
             </li>
@@ -164,22 +164,22 @@ export function Footer({ setCurrentTab }: FooterProps) {
           </h4>
           <ul className="space-y-2 text-xs font-bold">
             <li>
-              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Volunteer
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('donation')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('donation')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Donate
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Corporate Partnership
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#1B7330] transition-colors cursor-pointer text-slate-400">
+              <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Fundraise
               </button>
             </li>
@@ -193,19 +193,19 @@ export function Footer({ setCurrentTab }: FooterProps) {
           </h4>
           <ul className="space-y-3 text-xs font-semibold text-slate-400">
             <li className="flex items-start gap-2.5">
-              <MapPin className="w-4 h-4 text-[#1B7330] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#129E36] shrink-0 mt-0.5" />
               <span>123 Hope Avenue, City, State - S60001</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Phone className="w-4 h-4 text-[#1B7330] shrink-0" />
+              <Phone className="w-4 h-4 text-[#129E36] shrink-0" />
               <span>+91 98765 43210</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Mail className="w-4 h-4 text-[#1B7330] shrink-0" />
+              <Mail className="w-4 h-4 text-[#129E36] shrink-0" />
               <span className="hover:text-white transition-colors">info@dadfoundation.org</span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Globe className="w-4 h-4 text-[#1B7330] shrink-0" />
+              <Globe className="w-4 h-4 text-[#129E36] shrink-0" />
               <span className="hover:text-white transition-colors">www.dadfoundation.org</span>
             </li>
           </ul>
@@ -216,16 +216,16 @@ export function Footer({ setCurrentTab }: FooterProps) {
           <div className="space-y-3">
             <h5 className="text-[10px] font-bold uppercase tracking-widest text-white">Follow Us</h5>
             <div className="flex gap-4">
-              <a href="#" className="p-2 bg-slate-900 hover:bg-[#1B7330] text-slate-400 hover:text-white rounded-full transition-all">
+              <a href="#" className="p-2 bg-slate-900 hover:bg-[#129E36] text-slate-400 hover:text-white rounded-full transition-all">
                 <Facebook className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-2 bg-slate-900 hover:bg-[#1B7330] text-slate-400 hover:text-white rounded-full transition-all">
+              <a href="#" className="p-2 bg-slate-900 hover:bg-[#129E36] text-slate-400 hover:text-white rounded-full transition-all">
                 <Instagram className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-2 bg-slate-900 hover:bg-[#1B7330] text-slate-400 hover:text-white rounded-full transition-all">
+              <a href="#" className="p-2 bg-slate-900 hover:bg-[#129E36] text-slate-400 hover:text-white rounded-full transition-all">
                 <Youtube className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-2 bg-slate-900 hover:bg-[#1B7330] text-slate-400 hover:text-white rounded-full transition-all">
+              <a href="#" className="p-2 bg-slate-900 hover:bg-[#129E36] text-slate-400 hover:text-white rounded-full transition-all">
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
             </div>

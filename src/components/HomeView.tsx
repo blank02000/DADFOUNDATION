@@ -33,29 +33,29 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
       title: 'Medical Support',
       desc: 'Comprehensive healthcare, diagnostics, treatments and ongoing health management.',
       icon: Stethoscope,
-      bg: 'bg-[#1B7330]/10 text-[#1B7330]',
-      border: 'border-[#1B7330]/20'
+      bg: 'bg-[#0066CC]/10 text-[#0066CC]',
+      border: 'border-[#0066CC]/20'
     },
     {
       title: 'Surgical Support',
       desc: 'Advanced surgical interventions to improve mobility, function and quality of life.',
       icon: Activity,
-      bg: 'bg-blue-50 text-blue-600',
-      border: 'border-blue-100'
+      bg: 'bg-[#FF8C00]/10 text-[#FF8C00]',
+      border: 'border-[#FF8C00]/20'
     },
     {
       title: 'Therapy & Rehabilitation',
       desc: 'Physiotherapy, occupational therapy, speech therapy and sensory integration for better independence.',
       icon: HeartHandshake,
-      bg: 'bg-[#008080]/10 text-[#008080]',
-      border: 'border-[#008080]/20'
+      bg: 'bg-[#129E36]/10 text-[#129E36]',
+      border: 'border-[#129E36]/20'
     },
     {
       title: 'Emotional Wellness',
       desc: 'Counseling, mental health support and emotional resilience for all age groups.',
       icon: Brain,
-      bg: 'bg-purple-50 text-purple-600',
-      border: 'border-purple-100'
+      bg: 'bg-[#0A2E5C]/10 text-[#0A2E5C]',
+      border: 'border-[#0A2E5C]/20'
     },
     {
       title: 'Education & Skills',
@@ -68,15 +68,15 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
       title: 'Community & Inclusion',
       desc: 'Building awareness, creating opportunities and fostering an inclusive and accessible society.',
       icon: Users2,
-      bg: 'bg-rose-50 text-rose-600',
-      border: 'border-rose-100'
+      bg: 'bg-sky-50 text-sky-600',
+      border: 'border-sky-100'
     },
     {
       title: 'Family Support',
       desc: 'Guidance, resources and support for families and caregivers at every stage.',
       icon: Heart,
-      bg: 'bg-sky-50 text-sky-600',
-      border: 'border-sky-100'
+      bg: 'bg-rose-50 text-rose-600',
+      border: 'border-rose-100'
     }
   ];
 
@@ -84,33 +84,33 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
     <div className="pb-20 font-sans space-y-24">
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#E6EFE9] to-[#F1F6F2] overflow-hidden min-h-[640px] flex items-center">
+      <section className="relative bg-gradient-to-br from-[#F0F7FF] via-white to-[#EEF9EE] overflow-hidden min-h-[640px] flex items-center">
         {/* Abstract shapes matching the clean curves in the image */}
-        <div className="absolute top-0 right-0 w-[50%] h-full bg-[#1B7330]/5 rounded-bl-[120px] -z-10" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-white/40 rounded-full blur-2xl -z-10" />
+        <div className="absolute top-0 right-0 w-[50%] h-full bg-[#129E36]/5 rounded-bl-[120px] -z-10" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#0066CC]/5 rounded-full blur-2xl -z-10" />
 
         <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Hero Left Content */}
           <div className="lg:col-span-6 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 bg-[#1B7330]/10 text-[#1B7330] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
-              <ShieldCheck className="w-3.5 h-3.5" /> 80G Certified Non-Profit Organization
+            <div className="inline-flex items-center gap-2 bg-[#129E36]/10 text-[#129E36] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#129E36]" /> 80G Certified Non-Profit Organization
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-[#0A2240]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-[#0A2E5C]">
               Healing Lives, <br />
-              <span className="text-[#1B7330]">Empowering Abilities</span>
+              <span className="text-[#129E36]">Empowering Abilities</span>
             </h1>
 
             {/* Cursive italic script matching the image */}
-            <p className="font-script text-3xl text-[#1B7330] font-semibold leading-relaxed tracking-wide drop-shadow-xs">
+            <p className="font-script text-3.5xl text-[#FF8C00] font-semibold leading-relaxed tracking-wide drop-shadow-xs">
               Supporting Every Ability, Every Age
             </p>
 
             <div className="flex items-center gap-3 py-1">
-              <span className="h-1 w-8 bg-[#1B7330] rounded-full" />
-              <Heart className="w-4 h-4 text-[#1B7330] fill-[#1B7330]" />
-              <span className="h-1 w-8 bg-[#1B7330] rounded-full" />
+              <span className="h-1 w-8 bg-[#0066CC] rounded-full" />
+              <Heart className="w-4 h-4 text-[#FF8C00] fill-[#FF8C00]" />
+              <span className="h-1 w-8 bg-[#129E36] rounded-full" />
             </div>
 
             <p className="text-sm md:text-base text-slate-600 leading-relaxed max-w-xl font-medium">
@@ -119,15 +119,15 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <button 
-                onClick={() => setCurrentTab('donation')}
-                className="bg-[#0A2240] hover:bg-[#06162b] text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center gap-2"
+                onClick={() => setCurrentTab('programs')}
+                className="bg-[#0A2E5C] hover:bg-[#0066CC] text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-md hover:scale-[1.02] transition-all cursor-pointer flex items-center gap-2"
               >
                 <Heart className="w-4 h-4 text-white fill-transparent" />
                 Explore Our Services
               </button>
               <button 
                 onClick={() => setCurrentTab('volunteer')}
-                className="bg-white border border-[#1B7330] text-[#1B7330] hover:bg-[#1B7330]/5 px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer flex items-center gap-2"
+                className="bg-white border border-[#129E36] text-[#129E36] hover:bg-[#129E36]/5 px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer flex items-center gap-2"
               >
                 <Users2 className="w-4 h-4" />
                 Get Involved
@@ -151,21 +151,21 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
                 <div className="absolute -bottom-1 left-0 right-0 h-10 bg-[#F1F6F2] opacity-70 filter blur-xs" />
               </div>
 
-              {/* Overlapping dark blue card with green tagline */}
-              <div className="absolute -bottom-8 -left-4 md:-left-8 bg-[#0A2240] text-white p-6 md:p-8 rounded-3xl max-w-[280px] md:max-w-[320px] shadow-2xl space-y-3 border border-white/10 z-20">
+              {/* Overlapping dark blue card with green/orange tagline */}
+              <div className="absolute -bottom-8 -left-4 md:-left-8 bg-[#0A2E5C] text-white p-6 md:p-8 rounded-3xl max-w-[280px] md:max-w-[320px] shadow-2xl space-y-3 border border-white/10 z-20">
                 <h3 className="font-extrabold text-sm md:text-base tracking-tight border-b border-white/10 pb-2">
                   Holistic health care.
                 </h3>
                 <ul className="space-y-1 md:space-y-1.5 text-xs text-slate-300 font-semibold">
-                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#1B7330]" /> Every individual.</li>
-                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#1B7330]" /> Every ability.</li>
-                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#1B7330]" /> Every age.</li>
+                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#0066CC]" /> Every individual.</li>
+                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#129E36]" /> Every ability.</li>
+                  <li className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-[#FF8C00]" /> Every age.</li>
                 </ul>
                 <div className="pt-2 flex justify-between items-center">
-                  <span className="text-[#9DDF8C] font-extrabold text-xs md:text-sm tracking-wide bg-[#1B7330]/20 px-2.5 py-1 rounded">
+                  <span className="text-[#EEF9EE] font-extrabold text-xs md:text-sm tracking-wide bg-[#129E36]/20 px-2.5 py-1 rounded">
                     Every life matters.
                   </span>
-                  <Heart className="w-4 h-4 text-[#1B7330] fill-[#1B7330]" />
+                  <Heart className="w-4 h-4 text-[#FF8C00] fill-[#FF8C00]" />
                 </div>
               </div>
 
@@ -180,18 +180,18 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
         <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-8">
           
           <div className="flex flex-col items-center text-center gap-2.5">
-            <div className="p-3 bg-[#1B7330]/10 rounded-full text-[#1B7330] scale-105">
-              <Heart className="w-6 h-6 fill-[#1B7330]/20" />
+            <div className="p-3 bg-[#FF8C00]/10 rounded-full text-[#FF8C00] scale-105">
+              <Heart className="w-6 h-6 fill-[#FF8C00]/20" />
             </div>
-            <h4 className="text-sm font-extrabold text-[#0A2240]">Holistic Care</h4>
+            <h4 className="text-sm font-extrabold text-[#0A2E5C]">Holistic Care</h4>
             <p className="text-[11px] font-semibold text-slate-400">Mind, Body & Spirit</p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-2.5">
-            <div className="p-3 bg-blue-50 rounded-full text-blue-600 scale-105">
+            <div className="p-3 bg-[#0066CC]/10 rounded-full text-[#0066CC] scale-105">
               <Users2 className="w-6 h-6" />
             </div>
-            <h4 className="text-sm font-extrabold text-[#0A2240]">Inclusive</h4>
+            <h4 className="text-sm font-extrabold text-[#0A2E5C]">Inclusive</h4>
             <p className="text-[11px] font-semibold text-slate-400">for All Ages</p>
           </div>
 
@@ -199,15 +199,15 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
             <div className="p-3 bg-indigo-50 rounded-full text-indigo-600 scale-105">
               <Star className="w-6 h-6" />
             </div>
-            <h4 className="text-sm font-extrabold text-[#0A2240]">Empowerment</h4>
+            <h4 className="text-sm font-extrabold text-[#0A2E5C]">Empowerment</h4>
             <p className="text-[11px] font-semibold text-slate-400">Through Dignity</p>
           </div>
 
           <div className="flex flex-col items-center text-center gap-2.5">
-            <div className="p-3 bg-amber-50 rounded-full text-amber-600 scale-105">
+            <div className="p-3 bg-[#129E36]/10 rounded-full text-[#129E36] scale-105">
               <Sparkles className="w-6 h-6" />
             </div>
-            <h4 className="text-sm font-extrabold text-[#0A2240]">Compassion</h4>
+            <h4 className="text-sm font-extrabold text-[#0A2E5C]">Compassion</h4>
             <p className="text-[11px] font-semibold text-slate-400">Every Step</p>
           </div>
 
@@ -220,10 +220,10 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-4">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#1B7330] bg-[#1B7330]/10 px-3 py-1 rounded-full">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#129E36] bg-[#129E36]/10 px-3 py-1 rounded-full">
                 Our Mission
               </span>
-              <h2 className="text-2xl md:text-3.5xl font-extrabold text-[#0A2240] tracking-tight leading-tight">
+              <h2 className="text-2xl md:text-3.5xl font-extrabold text-[#0A2E5C] tracking-tight leading-tight">
                 Holistic Care. Whole Person. Better Tomorrow.
               </h2>
             </div>
@@ -236,48 +236,48 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
 
           {/* 5 pillars with icons */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 pt-4 border-t border-slate-100">
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
-              <div className="p-3 bg-emerald-50 rounded-full text-emerald-600">
+            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-[#0066CC]/5 transition-colors">
+              <div className="p-3 bg-[#0066CC]/10 rounded-full text-[#0066CC]">
                 <Activity className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-[#0A2240]">Physical Well-being</span>
+              <span className="text-xs font-bold text-[#0A2E5C]">Physical Well-being</span>
             </div>
 
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
-              <div className="p-3 bg-[#1B7330]/10 rounded-full text-[#1B7330]">
+            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-[#129E36]/5 transition-colors">
+              <div className="p-3 bg-[#129E36]/10 rounded-full text-[#129E36]">
                 <Brain className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-[#0A2240]">Mental Well-being</span>
+              <span className="text-xs font-bold text-[#0A2E5C]">Mental Well-being</span>
             </div>
 
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
-              <div className="p-3 bg-red-50 rounded-full text-red-500">
-                <Heart className="w-5 h-5 fill-red-50" />
+            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-[#FF8C00]/5 transition-colors">
+              <div className="p-3 bg-[#FF8C00]/10 rounded-full text-[#FF8C00]">
+                <Heart className="w-5 h-5 fill-transparent" />
               </div>
-              <span className="text-xs font-bold text-[#0A2240]">Emotional Well-being</span>
+              <span className="text-xs font-bold text-[#0A2E5C]">Emotional Well-being</span>
             </div>
 
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
-              <div className="p-3 bg-blue-50 rounded-full text-blue-600">
+            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-[#0066CC]/5 transition-colors">
+              <div className="p-3 bg-[#0066CC]/10 rounded-full text-[#0066CC]">
                 <Users2 className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-[#0A2240]">Social Well-being</span>
+              <span className="text-xs font-bold text-[#0A2E5C]">Social Well-being</span>
             </div>
 
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
-              <div className="p-3 bg-purple-50 rounded-full text-purple-600">
+            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-2xl hover:bg-amber-50 transition-colors">
+              <div className="p-3 bg-amber-50 rounded-full text-amber-600">
                 <Compass className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-[#0A2240]">Life Skills & Independence</span>
+              <span className="text-xs font-bold text-[#0A2E5C]">Life Skills & Independence</span>
             </div>
           </div>
 
           <div className="flex justify-center pt-4">
             <button 
               onClick={() => setCurrentTab('about')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-slate-50 border border-slate-200 hover:border-slate-300 text-[#0A2240] rounded-full font-bold text-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-[#0A2E5C] rounded-full font-bold text-xs transition-all cursor-pointer hover:scale-[1.01]"
             >
-              Learn More About Us <ChevronRight className="w-4 h-4" />
+              Learn More About Us <ChevronRight className="w-4 h-4 text-[#0A2E5C]" />
             </button>
           </div>
 
@@ -289,10 +289,10 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
         <div className="max-w-7xl mx-auto px-6 space-y-12">
           
           <div className="text-center space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#1B7330] bg-[#1B7330]/10 px-3 py-1 rounded-full">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#129E36] bg-[#129E36]/10 px-3 py-1 rounded-full">
               Commitment
             </span>
-            <h2 className="text-3xl font-extrabold text-[#0A2240] tracking-tight">Our Services</h2>
+            <h2 className="text-3xl font-extrabold text-[#0A2E5C] tracking-tight">Our Services</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -308,15 +308,15 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
                     <div className={`p-3 rounded-2xl w-fit ${s.bg}`}>
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-extrabold text-[#0A2240] tracking-tight group-hover:text-[#1B7330] transition-colors">
+                    <h3 className="font-extrabold text-[#0A2E5C] tracking-tight group-hover:text-[#129E36] transition-colors">
                       {s.title}
                     </h3>
                     <p className="text-xs text-slate-500 font-semibold leading-relaxed">
                       {s.desc}
                     </p>
                   </div>
-                  <div className="pt-2 text-[10px] font-extrabold uppercase tracking-wider text-[#1B7330] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                    View Details <ChevronRight className="w-3 h-3" />
+                  <div className="pt-2 text-[10px] font-extrabold uppercase tracking-wider text-[#0066CC] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                    View Details <ChevronRight className="w-3 h-3 text-[#0066CC]" />
                   </div>
                 </div>
               );
@@ -329,10 +329,10 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
       {/* Success Stories / Testimonials */}
       <section className="max-w-7xl mx-auto px-6 space-y-12">
         <div className="text-center space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#1B7330]">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#129E36] bg-[#129E36]/10 px-3 py-1 rounded-full">
             Empowering Journeys
           </span>
-          <h2 className="text-3xl font-extrabold text-[#0A2240] tracking-tight">
+          <h2 className="text-3xl font-extrabold text-[#0A2E5C] tracking-tight">
             Stories of Hope &amp; Transition
           </h2>
         </div>
@@ -346,13 +346,13 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
               <img 
                 src={st.image} 
                 alt={st.title} 
-                className="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-[#1B7330]/10 shrink-0" 
+                className="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-[#129E36]/10 shrink-0" 
               />
               <div className="space-y-3">
-                <span className="text-[9px] font-bold uppercase text-[#1B7330] bg-[#1B7330]/15 px-2.5 py-1 rounded-full">
+                <span className="text-[9px] font-bold uppercase text-[#129E36] bg-[#129E36]/15 px-2.5 py-1 rounded-full">
                   {st.context}
                 </span>
-                <h3 className="text-lg font-bold text-[#0A2240] font-sans">{st.title}</h3>
+                <h3 className="text-lg font-bold text-[#0A2E5C] font-sans">{st.title}</h3>
                 <p className="text-xs font-bold italic text-slate-650 leading-relaxed">
                   "{st.quote}"
                 </p>
@@ -367,14 +367,14 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
 
       {/* Bottom combined banner matching verbatim footer design of the screenshot */}
       <section className="max-w-7xl mx-auto px-6">
-        <div className="bg-[#1B7330] rounded-[36px] p-8 md:p-12 text-white relative overflow-hidden">
+        <div className="bg-[#0A2E5C] rounded-[36px] p-8 md:p-12 text-white relative overflow-hidden shadow-xl">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
             {/* Left element: hand-heart shape illustration / info */}
             <div className="lg:col-span-4 flex items-center gap-4">
               <div className="p-4 bg-white/10 rounded-full scale-110">
-                <HeartHandshake className="w-8 h-8 text-white fill-transparent" />
+                <HeartHandshake className="w-8 h-8 text-[#FF8C00] fill-transparent" />
               </div>
               <h3 className="font-extrabold text-lg md:text-xl leading-snug tracking-tight text-white max-w-xs">
                 Together, we can create a world where every ability is valued and every life thrives.
@@ -385,34 +385,35 @@ export function HomeView({ setCurrentTab }: HomeViewProps) {
             <div className="lg:col-span-4 flex flex-col gap-3 justify-center items-center">
               <button 
                 onClick={() => setCurrentTab('donation')}
-                className="bg-white text-[#1B7330] hover:bg-slate-50 w-full max-w-[210px] py-3 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform cursor-pointer"
+                className="bg-[#129E36] hover:bg-[#0E7F2B] text-white w-full max-w-[210px] py-3 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform cursor-pointer"
               >
-                <Heart className="w-3.5 h-3.5 text-[#1B7330] fill-transparent" />
+                <Heart className="w-3.5 h-3.5 text-white fill-transparent" />
                 Donate Now
               </button>
               <button 
                 onClick={() => setCurrentTab('volunteer')}
-                className="border border-white/40 hover:border-white/80 hover:bg-white/5 text-white w-full max-w-[210px] py-3 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 hover:scale-[1.02] transition-transform cursor-pointer"
+                className="border border-white/20 hover:border-white/60 hover:bg-white/5 text-white w-full max-w-[210px] py-3 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 hover:scale-[1.02] transition-transform cursor-pointer"
               >
-                <Users2 className="w-3.5 h-3.5" />
+                <Users2 className="w-3.5 h-3.5 text-[#0066CC]" />
                 Get Involved
               </button>
             </div>
 
             {/* Right element: detailed explanation */}
             <div className="lg:col-span-4 space-y-2 text-center lg:text-left">
-              <p className="text-xs md:text-sm font-semibold text-emerald-100 leading-relaxed">
+              <p className="text-xs md:text-sm font-semibold text-sky-100 leading-relaxed">
                 Your support helps us provide holistic care and opportunities for differently abled children, adults and seniors.
               </p>
               <div className="flex justify-center lg:justify-start">
-                <Heart className="w-4 h-4 text-emerald-300 fill-transparent" />
+                <Heart className="w-4 h-4 text-[#FF8C00] fill-[#FF8C00]" />
               </div>
             </div>
 
           </div>
 
           {/* Abstract green background bubble overlay */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -mr-40 -mt-40 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#129E36]/10 rounded-full blur-3xl -mr-40 -mt-40 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#0066CC]/10 rounded-full blur-3xl -ml-40 -mb-40 pointer-events-none" />
         </div>
       </section>
 
