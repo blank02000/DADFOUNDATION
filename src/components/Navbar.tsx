@@ -21,7 +21,6 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
     { id: 'programs', label: 'Our Services' },
-    { id: 'impact', label: 'Our Impact' },
     { id: 'volunteer', label: 'Get Involved' },
     { id: 'resources', label: 'Resources' },
     { id: 'contact', label: 'Contact Us' },

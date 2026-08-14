@@ -7,6 +7,7 @@ export enum PaymentStatus {
   PENDING = 'pending',
   SUCCESS = 'success',
   FAILED = 'failed',
+  TEST_MODE = 'test_mode',
 }
 
 export enum PaymentMethod {
@@ -38,6 +39,9 @@ export interface Donation {
   paymentMethod: PaymentMethod;
   taxReceiptNumber?: string;
   createdAt: any; // Firestore Timestamp or Date ISO string
+  isTest?: boolean;
+  notes?: string;
+  mode?: string;
 }
 
 export interface Volunteer {

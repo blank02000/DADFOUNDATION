@@ -58,7 +58,9 @@ export function AdminDashboardView() {
             paymentStatus: data.paymentStatus,
             paymentMethod: data.paymentMethod,
             taxReceiptNumber: data.taxReceiptNumber,
-            createdAt: data.createdAt
+            createdAt: data.createdAt,
+            isTest: data.isTest ?? true,
+            notes: data.notes || data.statusDescription
           });
         });
         setDonations(list);
@@ -368,6 +370,7 @@ export function AdminDashboardView() {
                       <th className="p-4">Receipt Num</th>
                       <th className="p-4">Sponsor Details</th>
                       <th className="p-4">Campaign</th>
+                      <th className="p-4">Status</th>
                       <th className="p-4 text-right">Value</th>
                     </tr>
                   </thead>
@@ -380,6 +383,11 @@ export function AdminDashboardView() {
                           <p className="text-[10px] text-slate-400">{d.donorEmail}</p>
                         </td>
                         <td className="p-4">{d.campaignId}</td>
+                        <td className="p-4">
+                          <span className="inline-block bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                            Test (No ₹ Transferred)
+                          </span>
+                        </td>
                         <td className="p-4 text-right text-[#1B7330] font-black">Rs. {d.amount.toLocaleString()}</td>
                       </tr>
                     ))}

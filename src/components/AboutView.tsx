@@ -4,21 +4,13 @@
  */
 
 import React from 'react';
-import { SAMPLE_TEAM } from '../sampleData';
-import { Award, Target, Calendar, ShieldCheck } from 'lucide-react';
+import { Award, Target, ShieldCheck } from 'lucide-react';
 
 interface AboutViewProps {
   setCurrentTab: (tab: string) => void;
 }
 
 export function AboutView({ setCurrentTab }: AboutViewProps) {
-  const milestones = [
-    { year: '1994', title: 'Registration & On-the-ground clinics', desc: 'The DAD Foundation registered its first mobile health van serving rural sectors.' },
-    { year: '2005', title: '50-Bed Specialty Healthcare Center', desc: 'Established dedicated maternity and infant developmental pediatric wards.' },
-    { year: '2018', title: '1 Million Beneficiaries Reached', desc: 'Sustained full integration across multiple states supporting complex corrective orthopedic programs.' },
-    { year: '2026', title: 'Radical Open-book Auditing', desc: 'Delivered an interactive transparency model tracking 92% direct field funds allocation.' }
-  ];
-
   return (
     <div className="space-y-20 pb-20 max-w-7xl mx-auto px-6 font-sans">
       
@@ -63,50 +55,6 @@ export function AboutView({ setCurrentTab }: AboutViewProps) {
             alt="Wheelchair kid with caregiver" 
             className="w-full h-full object-cover"
           />
-        </div>
-      </section>
-
-      {/* Timeline of Progress */}
-      <section className="space-y-10">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-extrabold text-[#0A2E5C] tracking-tight">Our Journey of Impact</h2>
-          <p className="text-xs font-semibold text-slate-500">Tracing key historical steps over thirty years.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {milestones.map((m, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-xs space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-extrabold text-[#0066CC]">{m.year}</span>
-                <Calendar className="w-4 h-4 text-[#0066CC]" />
-              </div>
-              <h3 className="text-sm font-extrabold text-[#0A2E5C]">{m.title}</h3>
-              <p className="text-xs font-semibold text-slate-500 leading-relaxed">{m.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Leadership Team Directory */}
-      <section className="space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-2 font-sans">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-[#129E36] bg-[#129E36]/10 px-2.5 py-1 rounded-full">Leadership</span>
-          <h2 className="text-3xl font-extrabold text-[#0A2E5C] tracking-tight">Meet the Visionaries</h2>
-          <p className="text-xs font-semibold text-slate-500">Our dedicated board members and healthcare coordinators</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {SAMPLE_TEAM.map((tm, keyId) => (
-            <div key={keyId} className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-md transition-shadow">
-              <div className="h-64 overflow-hidden relative bg-slate-50">
-                <img src={tm.image} alt={tm.name} className="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
-              </div>
-              <div className="p-6 text-center space-y-1">
-                <h4 className="text-base font-extrabold text-[#0A2E5C]">{tm.name}</h4>
-                <p className="text-xs font-bold text-[#129E36] uppercase tracking-widest">{tm.role}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

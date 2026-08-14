@@ -135,11 +135,6 @@ export function Footer({ setCurrentTab }: FooterProps) {
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('impact')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
-                Our Impact
-              </button>
-            </li>
-            <li>
               <button onClick={() => setCurrentTab('resources')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Resources
               </button>

@@ -55,10 +55,16 @@ export function DonationView() {
         donorEmail: email.trim(),
         donorPhone: phone.trim(),
         campaignId: campaign,
-        paymentStatus: 'success', // Simulated successful payment processing
+        paymentStatus: 'test_simulation', // Explicit test status
         paymentMethod: method,
         taxReceiptNumber: genReceipt,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
+        // Explicit fields indicating simulation test & no money transferred
+        isTest: true,
+        testMode: true,
+        moneyTransferred: false,
+        statusDescription: 'TEST SIMULATION - NO MONEY WAS TRANSFERRED',
+        notes: 'Simulated demo transaction in test mode. No funds were debited or transferred from bank/card/UPI.'
       });
       setReceiptNumber(genReceipt);
       setStatus('success');
@@ -103,12 +109,18 @@ export function DonationView() {
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl font-extrabold text-[#0A2E5C]">Thank You For Your Support!</h2>
+            <div className="inline-flex items-center gap-1.5 bg-amber-100 border border-amber-200 text-amber-800 px-3 py-1 rounded-full text-xs font-bold">
+              <span>⚠️ Test Simulation Mode (No Real Money Transferred)</span>
+            </div>
             <p className="text-xs font-bold text-[#129E36] uppercase tracking-wider">
-              {type === DonationType.MONTHLY ? 'Monthly Subscription Settled' : 'One-Time Donation Settled'}
+              {type === DonationType.MONTHLY ? 'Monthly Subscription Demo Recorded' : 'One-Time Donation Demo Recorded'}
             </p>
           </div>
           <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-left space-y-3 text-xs font-semibold text-slate-500">
-            <p className="text-sm font-bold text-[#0A2E5C] border-b border-slate-150 pb-2">Tax Exemption Receipt</p>
+            <div className="flex items-center justify-between border-b border-slate-150 pb-2">
+              <p className="text-sm font-bold text-[#0A2E5C]">Tax Exemption Receipt (Demo)</p>
+              <span className="text-[10px] bg-amber-50 text-amber-700 font-extrabold px-2 py-0.5 rounded border border-amber-200 uppercase">Test Record</span>
+            </div>
             <div className="flex justify-between">
               <span>Receipt Number:</span>
               <span className="text-[#0A2E5C] font-extrabold">{receiptNumber}</span>
@@ -123,8 +135,12 @@ export function DonationView() {
                 Rs. {customAmount ? parseFloat(customAmount).toLocaleString() : amount.toLocaleString()}
               </span>
             </div>
+            <div className="flex justify-between items-center text-amber-700 bg-amber-50/80 p-2.5 rounded-xl border border-amber-100 text-[11px] font-bold">
+              <span>Payment Status:</span>
+              <span>TEST SIMULATION (₹0 debited)</span>
+            </div>
             <p className="text-[10px] text-slate-400 mt-4 leading-relaxed italic">
-              Digital receipt generated automatically in cooperation with state auditing services. A certified PDF copy will be dispatched to {email}.
+              Logged to Firestore database as test demo entry. No real bank or card accounts were debited.
             </p>
           </div>
           <button 
