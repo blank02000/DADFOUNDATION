@@ -30,36 +30,130 @@ export const SAMPLE_TEAM = [
 
 export const SAMPLE_SERVICES = [
   {
-    title: 'Medical Support',
-    description: 'Comprehensive primary care diagnostics, treatment, and on-going chronic condition response programs.',
-    details: 'Our clinics offer 24/7 essential services, including immunization, preventive medicine checklists, and free medical diagnostic operations for families.',
+    id: 'healthcare-rehab',
+    category: 'Healthcare & Rehabilitation',
+    title: 'Healthcare Services and Rehabilitation Services',
+    shortTitle: 'Healthcare & Rehabilitation',
     icon: 'Stethoscope',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA_OBpuilGo8EIeATsSiG7GFIZadlJVALbg_iEnC1cKxWK7ogxIOC64AvG6C6RQlS8o_QitMwfkDVs06VIK8MYY7KDx_2cPTUtQM3FetGIiMIFgSZMbLpwArp9ayuLK5MG7QbaIK0HL-BO7Oab7ZiSLjugZavRdc2-m5-y5p3f1PXXmbPmn1kPgB7qfG53RmO1OYWuG-IQf1Yhy6Sz5QbSRhd7W-7DBbuoGrFHiALubP-akSXxPUGQ_ttFYkBvMbKcn9Qwc5udAEXqI',
-    color: 'emerald'
+    emoji: '🩺',
+    color: 'emerald',
+    description: 'Comprehensive medical consultations, preventive screenings, clinical therapies, and assistive mobility support tailored to individual needs.',
+    items: [
+      'Medical consultations and health screening',
+      'Preventive healthcare programs',
+      'Specialist referrals and specialist treatment',
+      'Health awareness camps',
+      'Physiotherapy',
+      'Occupational Therapy',
+      'Speech & Language Therapy',
+      'Orthotic and Prosthetic Support',
+      'Mobility Assessment & Assistive Devices'
+    ],
+    details: 'Our clinical rehabilitation wing delivers evidence-based therapy and healthcare management. From individualized physical therapy sessions and assistive prosthetics to specialized medical checkups, we ensure comprehensive physical recovery.',
+    image: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80'
   },
   {
-    title: 'Surgical Support',
-    description: 'Life-changing elective, corrective orthopaedic and reconstructive surgical therapies for children.',
-    details: 'Advanced surgical care managed by visiting experts in state-of-the-art facilities, completely cost-free for families under strict income criteria.',
+    id: 'child-development',
+    category: 'Child Development',
+    title: 'Child Development & Adolescent Disability',
+    shortTitle: 'Child Development & Disability',
     icon: 'Activity',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPpUZo_TDBqrsEu8cBUVL2htSH3yHYJpVtQ-Ff6m3FNDCWm3sTVloPrl0p1KdfQPdk4-gCbslLIwq50MFXW0yMaR97hNOa588ruvX5jqG0NT2ReLhWev0WMl1GTuupqqSncZBH03jlj2VTcczfsIWlFkfAMpFFdz5hpKoqdHlRhWDmPUvuEYf0CmgGg87gEQexUrG1OfDylSL0dHCJlru2WCxsFJVVxBWKUnxvUSezkEprhff9MPPzZFHfcNEnQDxLzIqxwxrUDSRI',
-    color: 'blue'
+    emoji: '🧒',
+    color: 'blue',
+    description: 'Early intervention programs, syndromic assessments, specialized therapies, and corrective rehabilitative care for children and adolescents.',
+    items: [
+      'Child Developmental assessments & Early intervention programs',
+      'Syndromic children screening, assessment and care',
+      'Cleft lip and cleft palate management',
+      'Club foot management',
+      'Cerebral palsy rehabilitation',
+      'Autism support services',
+      'Parent counselling and training'
+    ],
+    details: 'Dedicated pediatric interventions focusing on early milestone achievements, corrective skeletal & facial therapies (including cleft palate and clubfoot correction), cerebral palsy management, and compassionate parent guidance.',
+    image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80'
   },
   {
-    title: 'Therapy & Rehab',
-    description: 'Specialised physical and occupational therapists offering progressive sensory developmental treatments.',
-    details: 'Individualised physiotherapy routines utilizing balance, sensory integration chambers, and specialized aids for differently abled children and adults.',
-    icon: 'Sparkles',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCN5l7nBq3bg2ZMVunwtPjt50nyBjf3wy3SMctnmzuH43lQHijQjVu5Op3Uq8VDW_lz8cT9LhdQRg4JI5k-or6lHDcbjgPSDNzSvq-jyDtkWULhwR9BjLgLWqgzfHkhA-ivDW_Lp0so6krdkKptPMvEsYTOJbX-03W6o_AtkaCvfiiD_Es3Og6q0Kg-SakcmyOdkVAGEZI5m0MaUByZ9UXK9WG27JrNpYaEmB0AbAuLdlHXrEQfFuINmHqboYDqVq1gc1hjHHWQBdUZ',
-    color: 'indigo'
-  },
-  {
-    title: 'Emotional Wellness',
-    description: 'Counseling, group therapies, and caregiver stress monitoring networks in inclusive safe harbors.',
-    details: 'We support the wholesome social emotional mental wellness of families via sharing group sessions, trauma response guidance, and stress relief frameworks.',
+    id: 'senior-care',
+    category: 'Senior Citizen Care',
+    title: 'Senior Citizen Care',
+    shortTitle: 'Senior Citizen Care',
     icon: 'Heart',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCLzFJhKEkImbEJxsnd60_9hQVGSTxriUC2p3jwox92mytyAOHwP5iGJZ50Lh1VaZy-1JS5pl0ZGaaIXLFScoV_6XPVZJNBP8pf5JIZ93qY7UViWBiHCNmJOxe1vwPfImUdqbtBfg9JsYgrxJ8Hy8ihqcEJXqIsIhLBOoIf6qqC6ZRVOXqZwlj1vak1aJIDzpZo8lUUQBNGthB2QVke9f98Sr8frHL4wGpEOok7XGemZRcfUr2Dwq1xpnXNmxXdlCMBBy02cOl4E0SJ',
-    color: 'rose'
+    emoji: '👵',
+    color: 'indigo',
+    description: 'Specialized geriatric care, fracture recovery, mobility enhancement, and social engagement initiatives for graceful, dignified ageing.',
+    items: [
+      'Geriatric health issues and fracture care',
+      'Rehabilitation after illness or injury',
+      'Mobility enhancement',
+      'Social engagement programs',
+      'Healthy ageing initiatives'
+    ],
+    details: 'Empowering senior citizens through dedicated geriatric support, post-fracture and post-stroke rehabilitation, assisted movement exercises, and warm community bonding programs.',
+    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'community-outreach',
+    category: 'Community & Inclusiveness',
+    title: 'Community Outreach and Inclusiveness',
+    shortTitle: 'Community Outreach',
+    icon: 'Users2',
+    emoji: '🤝',
+    color: 'rose',
+    description: 'Grassroots medical camps, disability awareness, rural initiatives, school screenings, and collaborative volunteer empowerment programs.',
+    items: [
+      'Medical camps',
+      'Disability awareness programs',
+      'Rural healthcare initiatives',
+      'School screening programs',
+      'Community rehabilitation',
+      'Volunteer engagement'
+    ],
+    details: 'Reaching deep into rural and underserved sectors through mobile healthcare vans, free community screening drives, public disability sensitization, and volunteer-led inclusion initiatives.',
+    image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=800&q=80'
+  }
+];
+
+export const TARGET_GROUPS = [
+  {
+    id: 'children',
+    title: 'Children',
+    emoji: '👶',
+    subtitle: 'Early Intervention & Pediatric Care',
+    description: 'Developmental screenings, cerebral palsy therapy, cleft & clubfoot care, and tailored early intervention.',
+    image: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80',
+    color: 'bg-emerald-50 text-[#129E36] border-[#129E36]/20',
+    tagColor: 'bg-[#129E36]/10 text-[#129E36]'
+  },
+  {
+    id: 'pwd',
+    title: 'Persons with Disabilities',
+    emoji: '♿',
+    subtitle: 'Mobility & Inclusive Rehabilitation',
+    description: 'Therapy, orthotic & prosthetic devices, assistive mobility assessments, and dignity-focused rehabilitation.',
+    image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
+    color: 'bg-blue-50 text-[#0066CC] border-[#0066CC]/20',
+    tagColor: 'bg-[#0066CC]/10 text-[#0066CC]'
+  },
+  {
+    id: 'adults',
+    title: 'Adults',
+    emoji: '👨',
+    subtitle: 'Recovery, Wellness & Life Skills',
+    description: 'Physical rehabilitation, vocational readiness, chronic illness support, and emotional wellness.',
+    image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80',
+    color: 'bg-amber-50 text-amber-600 border-amber-200',
+    tagColor: 'bg-amber-100/80 text-amber-700'
+  },
+  {
+    id: 'seniors',
+    title: 'Senior Citizens',
+    emoji: '👴',
+    subtitle: 'Geriatric Care & Healthy Ageing',
+    description: 'Fracture rehabilitation, mobility enhancement, social engagement circles, and dignified elder healthcare.',
+    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80',
+    color: 'bg-rose-50 text-[#0A2E5C] border-[#0A2E5C]/20',
+    tagColor: 'bg-[#0A2E5C]/10 text-[#0A2E5C]'
   }
 ];
 
