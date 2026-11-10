@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { useFirebase } from './FirebaseProvider';
-import { Heart, LogIn, LogOut, Menu, X, ShieldAlert } from 'lucide-react';
+import { Heart, LogOut, Menu, X, ShieldAlert } from 'lucide-react';
 import { LogoIcon } from './Logo';
 
 interface NavbarProps {
@@ -85,7 +85,7 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
 
         {/* Session / Donate Buttons */}
         <div className="hidden lg:flex items-center gap-5">
-          {user ? (
+          {user && (
             <div className="flex items-center gap-3">
               <img 
                 src={user.photoURL || 'https://lh3.googleusercontent.com/a/default-user'} 
@@ -100,14 +100,6 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
                 Sign Out
               </button>
             </div>
-          ) : (
-            <button 
-              onClick={login}
-              className="flex items-center gap-1.5 text-sm font-semibold text-[#0A2E5C] hover:text-[#129E36] transition-colors cursor-pointer"
-            >
-              <LogIn className="w-4 h-4 text-[#129E36]" />
-              Sign In
-            </button>
           )}
 
           <button 
@@ -161,28 +153,22 @@ export function Navbar({ currentTab, setCurrentTab }: NavbarProps) {
               </button>
             )}
 
-            <div className="h-px bg-slate-100 my-2" />
-
-            {user ? (
-               <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-2">
-                  <img src={user.photoURL || ''} className="w-8 h-8 rounded-full" />
-                  <span className="text-sm font-semibold text-slate-700">{user.displayName}</span>
+            {user && (
+              <>
+                <div className="h-px bg-slate-100 my-2" />
+                <div className="flex items-center justify-between py-2">
+                  <div className="flex items-center gap-2">
+                    <img src={user.photoURL || ''} className="w-8 h-8 rounded-full" />
+                    <span className="text-sm font-semibold text-slate-700">{user.displayName}</span>
+                  </div>
+                  <button 
+                    onClick={logout}
+                    className="text-xs font-bold text-red-500 flex items-center gap-1 cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </button>
                 </div>
-                <button 
-                  onClick={logout}
-                  className="text-xs font-bold text-red-500 flex items-center gap-1 cursor-pointer"
-                >
-                  <LogOut className="w-4 h-4" /> Sign Out
-                </button>
-              </div>
-            ) : (
-              <button 
-                onClick={login}
-                className="text-left font-bold text-base py-2 text-[#0A2E5C] flex items-center gap-1.5 cursor-pointer"
-              >
-                <LogIn className="w-5 h-5 text-[#129E36]" /> Google Sign In
-              </button>
+              </>
             )}
           </div>
         </div>

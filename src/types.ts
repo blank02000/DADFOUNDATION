@@ -14,6 +14,8 @@ export enum PaymentMethod {
   STRIPE = 'Stripe',
   PAYPAL = 'PayPal',
   RAZORPAY = 'Razorpay',
+  UPI = 'UPI',
+  BANK_TRANSFER = 'Bank Transfer',
 }
 
 export enum DonationType {
@@ -38,6 +40,8 @@ export interface Donation {
   paymentStatus: PaymentStatus;
   paymentMethod: PaymentMethod;
   taxReceiptNumber?: string;
+  utrNumber?: string;
+  panNumber?: string;
   createdAt: any; // Firestore Timestamp or Date ISO string
   isTest?: boolean;
   notes?: string;

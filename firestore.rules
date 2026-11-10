@@ -54,7 +54,7 @@ service cloud.firestore {
 
     function isValidDonation(data) {
       return data.keys().hasAll(['amount', 'type', 'donorName', 'donorEmail', 'donorPhone', 'campaignId', 'paymentStatus', 'paymentMethod', 'createdAt'])
-             && data.keys().size() <= 11 // Allow Optional taxReceiptNumber
+             && data.keys().size() <= 14
              && data.amount is number
              && data.amount > 0
              && data.type in ['one-time', 'monthly']
@@ -63,8 +63,10 @@ service cloud.firestore {
              && data.donorPhone is string && data.donorPhone.size() <= 64
              && data.campaignId is string && data.campaignId.size() <= 128
              && data.paymentStatus in ['pending', 'success', 'failed']
-             && data.paymentMethod in ['Stripe', 'PayPal', 'Razorpay']
-             && (!data.keys().hasAny(['taxReceiptNumber']) || data.taxReceiptNumber is string);
+             && data.paymentMethod in ['Stripe', 'PayPal', 'Razorpay', 'UPI', 'Bank Transfer']
+             && (!data.keys().hasAny(['taxReceiptNumber']) || data.taxReceiptNumber is string)
+             && (!data.keys().hasAny(['utrNumber']) || (data.utrNumber is string && data.utrNumber.size() <= 64))
+             && (!data.keys().hasAny(['panNumber']) || (data.panNumber is string && data.panNumber.size() <= 32));
     }
 
     // 3. Volunteers Collection

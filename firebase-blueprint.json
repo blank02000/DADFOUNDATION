@@ -13,7 +13,9 @@
         "donorPhone": { "type": "string" },
         "campaignId": { "type": "string" },
         "paymentStatus": { "type": "string", "enum": ["pending", "success", "failed"] },
-        "paymentMethod": { "type": "string", "enum": ["Stripe", "PayPal", "Razorpay"] },
+        "paymentMethod": { "type": "string", "enum": ["Stripe", "PayPal", "Razorpay", "UPI", "Bank Transfer"] },
+        "utrNumber": { "type": "string" },
+        "panNumber": { "type": "string" },
         "taxReceiptNumber": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       },

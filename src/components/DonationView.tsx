@@ -4,348 +4,534 @@
  */
 
 import React, { useState } from 'react';
-import { db, handleFirestoreError, OperationType } from '../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { DonationType, PaymentMethod } from '../types';
-import { CreditCard, CheckCircle2, RefreshCw, AlertTriangle, ShieldCheck, Heart } from 'lucide-react';
+import { 
+  Building2, 
+  Copy, 
+  Check, 
+  ShieldCheck, 
+  Phone, 
+  Mail, 
+  QrCode, 
+  Share2,
+  ExternalLink
+} from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 
 export function DonationView() {
-  const [amount, setAmount] = useState<number>(1000);
+  // Amount state for dynamic UPI QR code generator
+  const [selectedAmount, setSelectedAmount] = useState<number>(1000);
   const [customAmount, setCustomAmount] = useState<string>('');
-  const [type, setType] = useState<DonationType>(DonationType.ONE_TIME);
-  const [campaign, setCampaign] = useState<string>('General Medical Care');
-  const [method, setMethod] = useState<PaymentMethod>(PaymentMethod.STRIPE);
 
-  // Donor credentials
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  // Active view tab: 'all' | 'qr' | 'bank'
+  const [activeTab, setActiveTab] = useState<'all' | 'qr' | 'bank'>('all');
 
-  // Flow State
-  const [status, setStatus] = useState<'form' | 'processing' | 'success' | 'err'>('form');
-  const [errMsg, setErrMsg] = useState('');
-  const [receiptNumber, setReceiptNumber] = useState('');
+  // QR Display mode: 'poster' (Official PNB standee) | 'generator' (Custom amount QR)
+  const [qrDisplayMode, setQrDisplayMode] = useState<'poster' | 'generator'>('poster');
 
-  const presets = [500, 1000, 5000, 10000];
+  // Copy feedback states
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  const handleDonate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const finalAmount = customAmount ? parseFloat(customAmount) : amount;
-    if (isNaN(finalAmount) || finalAmount <= 0) {
-      setStatus('err');
-      setErrMsg('Please enter a valid donation value greater than zero.');
-      return;
-    }
+  // Preset donation amounts
+  const presets = [500, 1000, 2500, 5000, 10000];
 
-    if (!name.trim() || !email.trim() || !phone.trim()) {
-      setStatus('err');
-      setErrMsg('Please complete your donor details (Name, Email, Phone).');
-      return;
-    }
+  // Official Foundation Account Specifications (Punjab National Bank)
+  const bankDetails = {
+    accountHolder: 'Differently Abled Development Foundation',
+    bankName: 'Punjab National Bank (PNB)',
+    accountNumber: '4588002100002279',
+    ifscCode: 'PUNB0458800',
+    branch: 'H P Secretariat',
+    upiId: '9872975927m@pnb',
+    transferModes: 'NEFT / RTGS / IMPS / UPI',
+    enquiryPhone: '+91 98333 21315',
+    pnbHelpdesk: '1800 1800 / 1800 2021'
+  };
 
-    setStatus('processing');
-    const path = `donations`;
-    const genReceipt = `DAD-TX-80G-${Math.floor(100000 + Math.random() * 900000)}`;
+  const shareableBankText = `DAD Foundation – Donation Account Details
+Account Holder: ${bankDetails.accountHolder}
+Bank Name: ${bankDetails.bankName}
+Account Number: ${bankDetails.accountNumber}
+IFSC Code: ${bankDetails.ifscCode}
+Branch: ${bankDetails.branch}
+UPI ID: ${bankDetails.upiId}
+Transfer Modes: ${bankDetails.transferModes}
+For donations and enquiries: ${bankDetails.enquiryPhone}`;
 
-    try {
-      await addDoc(collection(db, path), {
-        amount: finalAmount,
-        type,
-        donorName: name.trim(),
-        donorEmail: email.trim(),
-        donorPhone: phone.trim(),
-        campaignId: campaign,
-        paymentStatus: 'test_simulation', // Explicit test status
-        paymentMethod: method,
-        taxReceiptNumber: genReceipt,
-        createdAt: serverTimestamp(),
-        // Explicit fields indicating simulation test & no money transferred
-        isTest: true,
-        testMode: true,
-        moneyTransferred: false,
-        statusDescription: 'TEST SIMULATION - NO MONEY WAS TRANSFERRED',
-        notes: 'Simulated demo transaction in test mode. No funds were debited or transferred from bank/card/UPI.'
-      });
-      setReceiptNumber(genReceipt);
-      setStatus('success');
-    } catch (err) {
-      console.error(err);
-      setStatus('err');
-      setErrMsg('Database storage or validation rules rejected transaction.');
-      try {
-        handleFirestoreError(err, OperationType.CREATE, path);
-      } catch (logErr) {
-        // Logged
-      }
-    }
+  // Effective amount for dynamic QR code
+  const effectiveAmount = customAmount ? parseFloat(customAmount) : selectedAmount;
+  const validAmount = !isNaN(effectiveAmount) && effectiveAmount > 0 ? effectiveAmount : null;
+
+  // Build standard UPI URI for PNB UPI ID
+  const upiUrl = validAmount
+    ? `upi://pay?pa=${bankDetails.upiId}&pn=Differently%20Abled%20Development%20Foundation&am=${validAmount}&cu=INR&tn=Donation%20to%20DAD%20Foundation`
+    : `upi://pay?pa=${bankDetails.upiId}&pn=Differently%20Abled%20Development%20Foundation&cu=INR&tn=Donation%20to%20DAD%20Foundation`;
+
+  const handleCopy = (text: string, key: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => {
+      setCopiedKey((curr) => (curr === key ? null : curr));
+    }, 2200);
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8 font-sans">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 font-sans space-y-10">
       
-      {/* Introduction */}
-      <div className="text-center space-y-3 mb-10">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-[#129E36] bg-[#129E36]/10 px-3 py-1 rounded-full">Secure Giving Portal</span>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-[#0A2E5C] tracking-tight">Sponsor Treatment Loops</h1>
-        <p className="text-xs md:text-sm font-semibold text-slate-500 max-w-xl mx-auto">
-          Providing free specialized surgeries and diagnostics. Standard giving triggers 50% tax exemption under section 80G.
+      {/* Hero Header */}
+      <div className="text-center space-y-3 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#129E36]/10 text-[#129E36] text-[11px] font-bold tracking-wider uppercase">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Official Donation &amp; Contribution Portal</span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0A2E5C] tracking-tight">
+          Donation Account Details &amp; QR
+        </h1>
+        <p className="text-sm md:text-base font-medium text-slate-600 leading-relaxed">
+          Make direct contributions securely to the official bank account of{' '}
+          <strong className="text-[#0A2E5C]">Differently Abled Development Foundation</strong> or scan our official Punjab National Bank UPI QR code.
         </p>
       </div>
 
-      {status === 'processing' && (
-        <div className="bg-white rounded-3xl border border-slate-100 p-12 text-center space-y-4 shadow-sm flex flex-col items-center">
-          <RefreshCw className="w-12 h-12 text-[#129E36] animate-spin" />
-          <h3 className="text-xl font-extrabold text-[#0A2E5C]">Connecting Payment Gateway...</h3>
-          <p className="text-xs font-semibold text-slate-500 max-w-sm">
-            Please wait while we establish a secure transaction bridge with {method}...
+      {/* Mode Filter Tabs */}
+      <div className="flex justify-center">
+        <div className="bg-slate-100 p-1 rounded-2xl inline-flex gap-1 border border-slate-200/80">
+          <button
+            type="button"
+            onClick={() => setActiveTab('all')}
+            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              activeTab === 'all'
+                ? 'bg-white text-[#0A2E5C] shadow-sm'
+                : 'text-slate-600 hover:text-[#0A2E5C]'
+            }`}
+          >
+            All Payment Options
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('qr')}
+            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'qr'
+                ? 'bg-[#129E36] text-white shadow-sm'
+                : 'text-slate-600 hover:text-[#0A2E5C]'
+            }`}
+          >
+            <QrCode className="w-4 h-4" />
+            Scan UPI QR
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('bank')}
+            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'bank'
+                ? 'bg-[#0A2E5C] text-white shadow-sm'
+                : 'text-slate-600 hover:text-[#0A2E5C]'
+            }`}
+          >
+            <Building2 className="w-4 h-4" />
+            Bank Account Info
+          </button>
+        </div>
+      </div>
+
+      {/* Main Grid: QR Code + Bank Account */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* CARD 1: UPI QR CODE SCAN & PAY */}
+        {(activeTab === 'all' || activeTab === 'qr') && (
+          <div className={`${activeTab === 'qr' ? 'lg:col-span-12 max-w-2xl mx-auto w-full' : 'lg:col-span-6'} bg-white rounded-3xl border-2 border-emerald-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden`}>
+            
+            <div className="absolute top-0 right-0 bg-[#A6192E] text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
+              PNB Merchant UPI
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#129E36] flex items-center justify-center border border-emerald-200/50 shrink-0">
+                <QrCode className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black text-[#0A2E5C]">Scan &amp; Pay via UPI</h2>
+                <p className="text-xs text-slate-500 font-medium">
+                  Official Punjab National Bank UPI QR Code
+                </p>
+              </div>
+            </div>
+
+            {/* Switch: Official Poster vs Dynamic Amount QR */}
+            <div className="flex items-center justify-between bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
+              <button
+                type="button"
+                onClick={() => setQrDisplayMode('poster')}
+                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  qrDisplayMode === 'poster'
+                    ? 'bg-white text-[#0A2E5C] shadow-xs'
+                    : 'text-slate-500 hover:text-[#0A2E5C]'
+                }`}
+              >
+                Official PNB Standee
+              </button>
+              <button
+                type="button"
+                onClick={() => setQrDisplayMode('generator')}
+                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  qrDisplayMode === 'generator'
+                    ? 'bg-white text-[#129E36] shadow-xs'
+                    : 'text-slate-500 hover:text-[#129E36]'
+                }`}
+              >
+                Custom Amount QR
+              </button>
+            </div>
+
+            {/* View A: Official PNB Standee Image from user's upload */}
+            {qrDisplayMode === 'poster' && (
+              <div className="space-y-4">
+                <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/70 flex flex-col items-center">
+                  <div className="max-w-[280px] sm:max-w-[320px] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md bg-white">
+                    <img 
+                      src="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg" 
+                      alt="PNB Merchant QR Code - Differently Abled Development Foundation" 
+                      className="w-full h-auto object-contain block"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between w-full max-w-[320px] mt-3 px-1 text-[11px]">
+                    <span className="text-slate-500 font-semibold">
+                      Merchant: <strong>DAD Foundation</strong>
+                    </span>
+                    <a
+                      href="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg"
+                      download="DAD_Foundation_PNB_QR.jpeg"
+                      className="text-[#129E36] hover:text-[#0E7F2B] font-bold inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Save QR</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* View B: Dynamic Amount Generator QR */}
+            {qrDisplayMode === 'generator' && (
+              <div className="space-y-4">
+                {/* Quick Amount Selector to Pre-fill QR code */}
+                <div className="space-y-2 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                      Select Amount to Pre-fill in QR (₹)
+                    </label>
+                    {validAmount && (
+                      <span className="text-xs font-black text-[#129E36]">
+                        ₹{validAmount.toLocaleString('en-IN')}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                    {presets.map((preset) => {
+                      const isSelected = selectedAmount === preset && !customAmount;
+                      return (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => {
+                            setSelectedAmount(preset);
+                            setCustomAmount('');
+                          }}
+                          className={`py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#129E36] text-white shadow-xs'
+                              : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/60'
+                          }`}
+                        >
+                          ₹{preset >= 1000 ? `${preset / 1000}k` : preset}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-1">
+                    <input
+                      type="number"
+                      placeholder="Or enter custom amount in INR"
+                      value={customAmount}
+                      onChange={(e) => setCustomAmount(e.target.value)}
+                      className="w-full bg-white border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold text-[#0A2E5C] outline-none focus:ring-2 focus:ring-[#129E36]"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-white to-emerald-50/30 rounded-2xl border border-emerald-100 shadow-inner space-y-3">
+                  <div className="p-3 bg-white rounded-2xl border-2 border-slate-900/10 shadow-md">
+                    <QRCodeSVG
+                      value={upiUrl}
+                      size={180}
+                      level="H"
+                      includeMargin={true}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-black text-[#0A2E5C]">
+                      Scan to Donate {validAmount ? `₹${validAmount.toLocaleString('en-IN')}` : 'Any Amount'}
+                    </p>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      UPI ID: {bankDetails.upiId}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* UPI ID with One-Click Copy */}
+            <div className="space-y-2">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                Official PNB UPI ID / VPA
+              </label>
+              <div className="flex items-center justify-between bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl">
+                <span className="font-mono font-black text-sm text-[#0A2E5C] select-all">
+                  {bankDetails.upiId}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(bankDetails.upiId, 'upi-id')}
+                  className="inline-flex items-center gap-1.5 bg-[#129E36] hover:bg-[#0E7F2B] text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer active:scale-95"
+                >
+                  {copiedKey === 'upi-id' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-white" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy UPI ID</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Direct Mobile UPI Link Button */}
+            <div className="pt-1">
+              <a
+                href={upiUrl}
+                className="w-full bg-[#129E36] hover:bg-[#0E7F2B] text-white py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow cursor-pointer"
+              >
+                <QrCode className="w-4 h-4" />
+                <span>Open &amp; Pay via UPI App (Mobile)</span>
+              </a>
+              <p className="text-[10px] text-center text-slate-400 mt-2 font-medium">
+                Supports Google Pay • PhonePe • Paytm • BHIM • Amazon Pay • WhatsApp • Cred
+              </p>
+            </div>
+
+            {/* Helpdesk notice */}
+            <div className="border-t border-slate-100 pt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+              <span>PNB Helpdesk: <strong>{bankDetails.pnbHelpdesk}</strong></span>
+              <span>Enquiries: <strong>{bankDetails.enquiryPhone}</strong></span>
+            </div>
+
+          </div>
+        )}
+
+        {/* CARD 2: BANK ACCOUNT DETAILS (PUNJAB NATIONAL BANK) */}
+        {(activeTab === 'all' || activeTab === 'bank') && (
+          <div className={`${activeTab === 'bank' ? 'lg:col-span-12 max-w-3xl mx-auto w-full' : 'lg:col-span-6'} bg-white rounded-3xl border-2 border-blue-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden`}>
+            
+            <div className="absolute top-0 right-0 bg-[#0A2E5C] text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
+              NEFT • RTGS • IMPS • UPI
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0A2E5C] flex items-center justify-center border border-blue-200/50 shrink-0">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black text-[#0A2E5C]">Donation Account Details</h2>
+                <p className="text-xs text-slate-500 font-medium">
+                  Direct transfer to Punjab National Bank (PNB)
+                </p>
+              </div>
+            </div>
+
+            {/* Bank Spec Fields */}
+            <div className="space-y-3">
+              
+              {/* Account Holder */}
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Account Holder
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(bankDetails.accountHolder, 'acc-name')}
+                    className="text-[11px] font-bold text-[#0A2E5C] hover:text-[#129E36] inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    {copiedKey === 'acc-name' ? <Check className="w-3 h-3 text-[#129E36]" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedKey === 'acc-name' ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+                <p className="font-extrabold text-xs sm:text-sm text-[#0A2E5C] break-words">
+                  {bankDetails.accountHolder}
+                </p>
+              </div>
+
+              {/* Bank Name */}
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Bank Name
+                </span>
+                <p className="font-bold text-sm text-[#0A2E5C]">
+                  {bankDetails.bankName}
+                </p>
+              </div>
+
+              {/* Account Number */}
+              <div className="p-3.5 bg-blue-50/50 rounded-2xl border border-blue-100 space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                    Account Number
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(bankDetails.accountNumber, 'acc-num')}
+                    className="text-[11px] font-bold text-[#0A2E5C] hover:text-[#129E36] inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-lg border border-blue-200 cursor-pointer shadow-2xs"
+                  >
+                    {copiedKey === 'acc-num' ? <Check className="w-3 h-3 text-[#129E36]" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedKey === 'acc-num' ? 'Copied' : 'Copy Number'}</span>
+                  </button>
+                </div>
+                <p className="font-mono font-black text-lg sm:text-xl text-[#0A2E5C] tracking-wider select-all">
+                  {bankDetails.accountNumber}
+                </p>
+              </div>
+
+              {/* IFSC & Branch Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      IFSC Code
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(bankDetails.ifscCode, 'ifsc')}
+                      className="text-[11px] font-bold text-[#0A2E5C] hover:text-[#129E36] inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedKey === 'ifsc' ? <Check className="w-3 h-3 text-[#129E36]" /> : <Copy className="w-3 h-3" />}
+                      <span>{copiedKey === 'ifsc' ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+                  <p className="font-mono font-black text-sm text-[#0A2E5C] select-all">
+                    {bankDetails.ifscCode}
+                  </p>
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                    Branch
+                  </span>
+                  <p className="font-bold text-sm text-[#0A2E5C]">
+                    {bankDetails.branch}
+                  </p>
+                </div>
+              </div>
+
+              {/* UPI ID & Transfer Modes */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      UPI ID
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(bankDetails.upiId, 'upi-field')}
+                      className="text-[11px] font-bold text-[#0A2E5C] hover:text-[#129E36] inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedKey === 'upi-field' ? <Check className="w-3 h-3 text-[#129E36]" /> : <Copy className="w-3 h-3" />}
+                      <span>{copiedKey === 'upi-field' ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+                  <p className="font-mono font-black text-xs text-[#0A2E5C] select-all">
+                    {bankDetails.upiId}
+                  </p>
+                </div>
+
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                    Transfer Modes
+                  </span>
+                  <p className="font-bold text-xs text-[#0A2E5C]">
+                    {bankDetails.transferModes}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bank details for sharing card (matches screenshot image_a338f6c3.png) */}
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#0A2E5C] flex items-center gap-1.5">
+                  <Share2 className="w-3.5 h-3.5 text-[#129E36]" />
+                  Bank details for sharing
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(shareableBankText, 'all-bank')}
+                  className="inline-flex items-center gap-1 bg-white hover:bg-slate-100 text-[#0A2E5C] px-3 py-1 rounded-xl text-xs font-bold border border-slate-200 transition-all cursor-pointer shadow-2xs"
+                >
+                  {copiedKey === 'all-bank' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-[#129E36]" />
+                      <span>Copied Details!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy All Details</span>
+                    </>
+                  )}
+                </button>
+              </div>
+              <p className="text-[11px] text-slate-500 font-medium">
+                For donations and enquiries: <a href="tel:+919833321315" className="font-bold text-[#0A2E5C] hover:text-[#129E36]">{bankDetails.enquiryPhone}</a>
+              </p>
+            </div>
+
+          </div>
+        )}
+
+      </div>
+
+      {/* HELPDESK & ACCOUNTS SUPPORT FOOTNOTE */}
+      <div className="bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-600">
+        <div className="space-y-1 text-center md:text-left">
+          <h4 className="font-black text-[#0A2E5C] text-sm">
+            Questions Regarding Donations or Direct Bank Transfer?
+          </h4>
+          <p className="font-medium text-slate-500">
+            Reach out directly to our donation helpdesk or accounts team for receipts, confirmation, or CSR partnerships.
           </p>
         </div>
-      )}
 
-      {status === 'success' && (
-        <div className="bg-white rounded-3xl border border-slate-100 p-10 space-y-6 shadow-sm text-center max-w-xl mx-auto">
-          <div className="mx-auto bg-[#129E36]/10 text-[#129E36] p-3 rounded-full w-fit">
-            <CheckCircle2 className="w-12 h-12" />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-extrabold text-[#0A2E5C]">Thank You For Your Support!</h2>
-            <div className="inline-flex items-center gap-1.5 bg-amber-100 border border-amber-200 text-amber-800 px-3 py-1 rounded-full text-xs font-bold">
-              <span>⚠️ Test Simulation Mode (No Real Money Transferred)</span>
-            </div>
-            <p className="text-xs font-bold text-[#129E36] uppercase tracking-wider">
-              {type === DonationType.MONTHLY ? 'Monthly Subscription Demo Recorded' : 'One-Time Donation Demo Recorded'}
-            </p>
-          </div>
-          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-left space-y-3 text-xs font-semibold text-slate-500">
-            <div className="flex items-center justify-between border-b border-slate-150 pb-2">
-              <p className="text-sm font-bold text-[#0A2E5C]">Tax Exemption Receipt (Demo)</p>
-              <span className="text-[10px] bg-amber-50 text-amber-700 font-extrabold px-2 py-0.5 rounded border border-amber-200 uppercase">Test Record</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Receipt Number:</span>
-              <span className="text-[#0A2E5C] font-extrabold">{receiptNumber}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Sponsor Name:</span>
-              <span className="text-[#0A2E5C] font-extrabold">{name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Amount Funded:</span>
-              <span className="text-[#129E36] font-black">
-                Rs. {customAmount ? parseFloat(customAmount).toLocaleString() : amount.toLocaleString()}
-              </span>
-            </div>
-            <div className="flex justify-between items-center text-amber-700 bg-amber-50/80 p-2.5 rounded-xl border border-amber-100 text-[11px] font-bold">
-              <span>Payment Status:</span>
-              <span>TEST SIMULATION (₹0 debited)</span>
-            </div>
-            <p className="text-[10px] text-slate-400 mt-4 leading-relaxed italic">
-              Logged to Firestore database as test demo entry. No real bank or card accounts were debited.
-            </p>
-          </div>
-          <button 
-            onClick={() => {
-              setStatus('form');
-              setName('');
-              setCustomAmount('');
-              setEmail('');
-              setPhone('');
-            }}
-            className="w-full bg-[#129E36] hover:bg-[#0E7F2B] text-white py-3.5 rounded-full font-bold text-xs transition-colors cursor-pointer"
+        <div className="flex flex-wrap items-center justify-center gap-4 shrink-0">
+          <a
+            href="tel:+919833321315"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white border border-slate-200 text-[#0A2E5C] font-bold hover:border-[#129E36] transition-colors"
           >
-            Sponsor Another Patient
-          </button>
-        </div>
-      )}
-
-      {status === 'err' && (
-        <div className="bg-rose-50 rounded-3xl border border-rose-100 p-6 space-y-4 max-w-xl mx-auto text-center mb-8">
-          <div className="mx-auto text-rose-600 bg-rose-100 p-2.5 rounded-full w-fit">
-            <AlertTriangle className="w-8 h-8" />
-          </div>
-          <p className="text-sm font-bold text-rose-800">{errMsg}</p>
-          <button 
-            onClick={() => setStatus('form')}
-            className="px-5 py-2.5 bg-[#0A2E5C] hover:bg-[#0066CC] text-white rounded-xl text-xs font-bold cursor-pointer"
+            <Phone className="w-3.5 h-3.5 text-[#129E36]" />
+            +91 98333 21315
+          </a>
+          <a
+            href="mailto:info@dadfoundation.org"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white border border-slate-200 text-[#0A2E5C] font-bold hover:border-[#129E36] transition-colors"
           >
-            Go Back &amp; Rectify Form
-          </button>
+            <Mail className="w-3.5 h-3.5 text-[#129E36]" />
+            info@dadfoundation.org
+          </a>
         </div>
-      )}
-
-      {status === 'form' && (
-        <form onSubmit={handleDonate} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Main Selectors */}
-          <div className="lg:col-span-7 bg-white p-8 rounded-[32px] border border-slate-100 shadow-xs space-y-6">
-            
-            {/* Type Switcher */}
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-[#0A2E5C]/60">Giving Cycle</label>
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  type="button"
-                  onClick={() => setType(DonationType.ONE_TIME)}
-                  className={`py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer ${
-                    type === DonationType.ONE_TIME 
-                      ? 'bg-[#129E36] text-white shadow-sm' 
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-500'
-                  }`}
-                >
-                  One-time Donation
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setType(DonationType.MONTHLY)}
-                  className={`py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer ${
-                    type === DonationType.MONTHLY 
-                      ? 'bg-[#129E36] text-white shadow-sm' 
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-500'
-                  }`}
-                >
-                  Monthly Contribution
-                </button>
-              </div>
-            </div>
-
-            {/* Presets Amount */}
-            <div className="space-y-3">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-[#0A2E5C]/60">Select Value (INR)</label>
-              <div className="grid grid-cols-4 gap-2 md:gap-4">
-                {presets.map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => {
-                      setAmount(p);
-                      setCustomAmount('');
-                    }}
-                    className={`py-3.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
-                      amount === p && !customAmount
-                        ? 'bg-[#129E36] text-white shadow-xs'
-                        : 'bg-slate-50 hover:bg-slate-100 text-slate-500'
-                    }`}
-                  >
-                    {p.toLocaleString()}
-                  </button>
-                ))}
-              </div>
-              
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-extrabold text-sm font-sans">Rs.</span>
-                <input
-                  type="number"
-                  placeholder="Custom Amount"
-                  value={customAmount}
-                  onChange={(e) => {
-                    setCustomAmount(e.target.value);
-                    setAmount(0);
-                  }}
-                  className="w-full bg-slate-50 border border-slate-100 pl-12 pr-4 py-3.5 rounded-2xl focus:ring-1 focus:ring-[#129E36] outline-none font-bold text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Campaign Selection */}
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-[#0A2E5C]/60">Initiative Segment</label>
-              <select 
-                value={campaign}
-                onChange={(e) => setCampaign(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-100 p-3.5 rounded-2xl text-xs font-semibold text-[#0A2E5C] outline-none"
-              >
-                <option value="General Medical Care">General Medical Care</option>
-                <option value="Advanced MRI Scanners Program">Advanced Diagnostic Systems Project</option>
-                <option value="Therapeutic Physical Rehabilitation">Physiotherapy &amp; Rehab camps</option>
-                <option value="Maternal & Pediatric Development">Maternal check-up camps</option>
-              </select>
-            </div>
-
-          </div>
-
-          {/* Side Info & payment detail elements */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Donor Forms */}
-            <div className="bg-white p-6 rounded-[32px] border border-slate-100 shadow-xs space-y-4">
-              <h3 className="text-xs font-bold text-[#0A2E5C] tracking-widest uppercase border-b border-slate-100 pb-2 flex items-center gap-1.5">
-                <Heart className="w-4 h-4 text-[#129E36] fill-[#129E36]/20" /> Donor Credentials
-              </h3>
-              
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400">Sponsor Full Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-100 px-4 py-2.5 rounded-xl text-xs font-semibold outline-none text-[#0A2E5C]"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400">Email Address</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="e.g. john@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-100 px-4 py-2.5 rounded-xl text-xs font-semibold outline-none text-[#0A2E5C]"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400">Phone Mobile</label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. +91 9876543210"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-100 px-4 py-2.5 rounded-xl text-xs font-semibold outline-none text-[#0A2E5C]"
-                />
-              </div>
-            </div>
-
-            {/* Gateway Choice & Submit button */}
-            <div className="bg-[#0A2E5C] text-white p-6 rounded-[32px] space-y-4 border border-white/5">
-              <h3 className="text-[10px] font-bold tracking-widest text-[#129E36] uppercase">Secure payment</h3>
-              
-              <div className="space-y-2">
-                <label className="text-[9px] uppercase font-bold text-slate-300">Gateway Provider</label>
-                <select 
-                  value={method}
-                  onChange={(e) => setMethod(e.target.value as PaymentMethod)}
-                  className="w-full bg-slate-900 border border-slate-800 px-3 py-2.5 rounded-xl text-xs font-bold outline-none text-white"
-                >
-                  <option value={PaymentMethod.STRIPE}>Stripe (Apple Pay, Credit Card)</option>
-                  <option value={PaymentMethod.PAYPAL}>PayPal Standard</option>
-                  <option value={PaymentMethod.RAZORPAY}>Razorpay (UPI, NetBanking)</option>
-                </select>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full bg-[#129E36] hover:bg-[#0E7F2B] text-white py-3.5 rounded-full font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer hover:scale-[1.01]"
-                >
-                  <CreditCard className="w-4 h-4 text-white" />
-                  Finalise Donation
-                </button>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold tracking-wide justify-center">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#129E36]" />
-                <span>SSL Encrypted Secure Connection</span>
-              </div>
-            </div>
-
-          </div>
-
-        </form>
-      )}
+      </div>
 
     </div>
   );
