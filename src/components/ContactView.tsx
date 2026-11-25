@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, ChevronDown, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, Send, CheckCircle2, ChevronDown, MessageSquare } from 'lucide-react';
 
 export function ContactView() {
   const [name, setName] = useState('');
@@ -70,10 +70,13 @@ export function ContactView() {
                 <Phone className="w-5 h-5 text-[#1B7330]" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Medical Helpdesk</h4>
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Contact</h4>
                 <p className="text-xs font-semibold text-[#0A2240]">
-                  +91-22-2490-4100 / 011 <br />
-                  (Response lines available 09:00 AM - 06:00 PM)
+                  <a href="tel:+919833321315" className="hover:text-[#1B7330] transition-colors">
+                    +91 98333 21315
+                  </a>
+                  <br />
+                  <span className="text-slate-500 font-medium">(Response lines available 09:00 AM - 06:00 PM)</span>
                 </p>
               </div>
             </div>
@@ -83,10 +86,30 @@ export function ContactView() {
                 <Mail className="w-5 h-5 text-[#1B7330]" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Inquiry Mailbox</h4>
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email</h4>
                 <p className="text-xs font-semibold text-[#0A2240]">
-                  info@dadfoundation.org <br />
-                  support@dadfoundation.org
+                  <a href="mailto:dadfoundation.ngo@gmail.com" className="hover:text-[#1B7330] transition-colors">
+                    dadfoundation.ngo@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4 items-start">
+              <div className="p-3 bg-slate-100 text-[#0A2240] rounded-xl shrink-0 border border-slate-200/50">
+                <Globe className="w-5 h-5 text-[#1B7330]" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Website</h4>
+                <p className="text-xs font-semibold text-[#0A2240]">
+                  <a
+                    href="https://www.dadfoundation.org.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#1B7330] transition-colors"
+                  >
+                    www.dadfoundation.org.in
+                  </a>
                 </p>
               </div>
             </div>
@@ -95,7 +118,7 @@ export function ContactView() {
           <div className="bg-[#1B7330]/5 rounded-2xl border border-[#1B7330]/10 p-6 space-y-2">
             <h4 className="text-xs font-bold text-[#1B7330] uppercase">Emergency Medical support</h4>
             <p className="text-[11px] font-semibold text-slate-500 leading-relaxed">
-              If you represent an orphan center seeking reconstructive orthopedic therapy loops, communicate with Dr Jenkins directly inside <strong>info@dadfoundation.org</strong>.
+              If you represent an orphan center seeking reconstructive orthopedic therapy loops, reach out to our team directly at <strong>dadfoundation.ngo@gmail.com</strong>.
             </p>
           </div>
         </div>

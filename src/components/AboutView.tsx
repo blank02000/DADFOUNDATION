@@ -65,14 +65,14 @@ export function AboutView({ setCurrentTab }: AboutViewProps) {
             <ShieldCheck className="w-5 h-5 text-[#129E36]" /> Radical Financial Honesty
           </h3>
           <p className="text-xs font-semibold text-slate-500 leading-relaxed">
-            As a public charity, we commit to audit clearances. Download our 80G documentation, IRS equivalent compliance frameworks, and certified expenditure metrics directly on our Knowledge Library tab.
+            As a public charity, we commit to audit clearances. Reach out to our team for our 80G documentation, compliance frameworks, and certified expenditure metrics.
           </p>
         </div>
         <button 
-          onClick={() => setCurrentTab('resources')}
+          onClick={() => setCurrentTab('contact')}
           className="bg-[#0A2E5C] text-white hover:bg-[#0066CC] px-6 py-3.5 rounded-full font-bold text-xs transition-colors cursor-pointer shrink-0 whitespace-nowrap hover:scale-[1.02]"
         >
-          View Governance Audits
+          Contact Us for Audits
         </button>
       </section>
 

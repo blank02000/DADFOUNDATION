@@ -135,11 +135,6 @@ export function Footer({ setCurrentTab }: FooterProps) {
               </button>
             </li>
             <li>
-              <button onClick={() => setCurrentTab('resources')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
-                Resources
-              </button>
-            </li>
-            <li>
               <button onClick={() => setCurrentTab('volunteer')} className="hover:text-[#129E36] transition-colors cursor-pointer text-slate-400">
                 Get Involved
               </button>
@@ -193,15 +188,15 @@ export function Footer({ setCurrentTab }: FooterProps) {
             </li>
             <li className="flex items-center gap-2.5">
               <Phone className="w-4 h-4 text-[#129E36] shrink-0" />
-              <span>+91 98765 43210</span>
+              <a href="tel:+919833321315" className="hover:text-white transition-colors">+91 98333 21315</a>
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="w-4 h-4 text-[#129E36] shrink-0" />
-              <span className="hover:text-white transition-colors">info@dadfoundation.org</span>
+              <a href="mailto:dadfoundation.ngo@gmail.com" className="hover:text-white transition-colors">dadfoundation.ngo@gmail.com</a>
             </li>
             <li className="flex items-center gap-2.5">
               <Globe className="w-4 h-4 text-[#129E36] shrink-0" />
-              <span className="hover:text-white transition-colors">www.dadfoundation.org</span>
+              <a href="https://www.dadfoundation.org.in" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.dadfoundation.org.in</a>
             </li>
           </ul>
 

@@ -12,7 +12,6 @@ import { AboutView } from './components/AboutView';
 import { ProgramsView } from './components/ProgramsView';
 import { SuccessStoriesView } from './components/SuccessStoriesView';
 import { VolunteerView } from './components/VolunteerView';
-import { BlogView } from './components/BlogView';
 import { GalleryView } from './components/GalleryView';
 import { ContactView } from './components/ContactView';
 import { PrivacyTermsView } from './components/PrivacyTermsView';
@@ -45,8 +44,6 @@ export default function App() {
             <EventsView />
           </div>
         );
-      case 'resources':
-        return <BlogView />;
       case 'contact':
         return <ContactView />;
       case 'privacy':

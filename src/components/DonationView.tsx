@@ -12,27 +12,12 @@ import {
   Phone, 
   Mail, 
   QrCode, 
-  Share2,
-  ExternalLink
+  Share2
 } from 'lucide-react';
-import { QRCodeSVG } from 'qrcode.react';
 
 export function DonationView() {
-  // Amount state for dynamic UPI QR code generator
-  const [selectedAmount, setSelectedAmount] = useState<number>(1000);
-  const [customAmount, setCustomAmount] = useState<string>('');
-
-  // Active view tab: 'all' | 'qr' | 'bank'
-  const [activeTab, setActiveTab] = useState<'all' | 'qr' | 'bank'>('all');
-
-  // QR Display mode: 'poster' (Official PNB standee) | 'generator' (Custom amount QR)
-  const [qrDisplayMode, setQrDisplayMode] = useState<'poster' | 'generator'>('poster');
-
   // Copy feedback states
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-
-  // Preset donation amounts
-  const presets = [500, 1000, 2500, 5000, 10000];
 
   // Official Foundation Account Specifications (Punjab National Bank)
   const bankDetails = {
@@ -57,14 +42,8 @@ UPI ID: ${bankDetails.upiId}
 Transfer Modes: ${bankDetails.transferModes}
 For donations and enquiries: ${bankDetails.enquiryPhone}`;
 
-  // Effective amount for dynamic QR code
-  const effectiveAmount = customAmount ? parseFloat(customAmount) : selectedAmount;
-  const validAmount = !isNaN(effectiveAmount) && effectiveAmount > 0 ? effectiveAmount : null;
-
   // Build standard UPI URI for PNB UPI ID
-  const upiUrl = validAmount
-    ? `upi://pay?pa=${bankDetails.upiId}&pn=Differently%20Abled%20Development%20Foundation&am=${validAmount}&cu=INR&tn=Donation%20to%20DAD%20Foundation`
-    : `upi://pay?pa=${bankDetails.upiId}&pn=Differently%20Abled%20Development%20Foundation&cu=INR&tn=Donation%20to%20DAD%20Foundation`;
+  const upiUrl = `upi://pay?pa=${bankDetails.upiId}&pn=Differently%20Abled%20Development%20Foundation&cu=INR&tn=Donation%20to%20DAD%20Foundation`;
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -92,193 +71,52 @@ For donations and enquiries: ${bankDetails.enquiryPhone}`;
         </p>
       </div>
 
-      {/* Mode Filter Tabs */}
-      <div className="flex justify-center">
-        <div className="bg-slate-100 p-1 rounded-2xl inline-flex gap-1 border border-slate-200/80">
-          <button
-            type="button"
-            onClick={() => setActiveTab('all')}
-            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-              activeTab === 'all'
-                ? 'bg-white text-[#0A2E5C] shadow-sm'
-                : 'text-slate-600 hover:text-[#0A2E5C]'
-            }`}
-          >
-            All Payment Options
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('qr')}
-            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTab === 'qr'
-                ? 'bg-[#129E36] text-white shadow-sm'
-                : 'text-slate-600 hover:text-[#0A2E5C]'
-            }`}
-          >
-            <QrCode className="w-4 h-4" />
-            Scan UPI QR
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('bank')}
-            className={`px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              activeTab === 'bank'
-                ? 'bg-[#0A2E5C] text-white shadow-sm'
-                : 'text-slate-600 hover:text-[#0A2E5C]'
-            }`}
-          >
-            <Building2 className="w-4 h-4" />
-            Bank Account Info
-          </button>
-        </div>
-      </div>
-
       {/* Main Grid: QR Code + Bank Account */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* CARD 1: UPI QR CODE SCAN & PAY */}
-        {(activeTab === 'all' || activeTab === 'qr') && (
-          <div className={`${activeTab === 'qr' ? 'lg:col-span-12 max-w-2xl mx-auto w-full' : 'lg:col-span-6'} bg-white rounded-3xl border-2 border-emerald-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden`}>
-            
-            <div className="absolute top-0 right-0 bg-[#A6192E] text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
-              PNB Merchant UPI
+        <div className="lg:col-span-6 bg-white rounded-3xl border-2 border-emerald-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden">
+          
+          <div className="absolute top-0 right-0 bg-[#A6192E] text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
+            PNB Merchant UPI
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#129E36] flex items-center justify-center border border-emerald-200/50 shrink-0">
+              <QrCode className="w-6 h-6" />
             </div>
+            <div>
+              <h2 className="text-xl font-black text-[#0A2E5C]">Scan &amp; Pay via UPI</h2>
+              <p className="text-xs text-slate-500 font-medium">
+                Official Punjab National Bank UPI QR Code
+              </p>
+            </div>
+          </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#129E36] flex items-center justify-center border border-emerald-200/50 shrink-0">
-                <QrCode className="w-6 h-6" />
+          {/* Official PNB Standee Image */}
+          <div className="space-y-4">
+            <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/70 flex flex-col items-center">
+              <div className="max-w-[280px] sm:max-w-[320px] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md bg-white">
+                <img 
+                  src="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg" 
+                  alt="PNB Merchant QR Code - Differently Abled Development Foundation" 
+                  className="w-full h-auto object-contain block"
+                />
               </div>
-              <div>
-                <h2 className="text-xl font-black text-[#0A2E5C]">Scan &amp; Pay via UPI</h2>
-                <p className="text-xs text-slate-500 font-medium">
-                  Official Punjab National Bank UPI QR Code
-                </p>
+              <div className="flex items-center justify-between w-full max-w-[320px] mt-3 px-1 text-[11px]">
+                <span className="text-slate-500 font-semibold">
+                  Merchant: <strong>DAD Foundation</strong>
+                </span>
+                <a
+                  href="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg"
+                  download="DAD_Foundation_PNB_QR.jpeg"
+                  className="text-[#129E36] hover:text-[#0E7F2B] font-bold inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Save QR</span>
+                </a>
               </div>
             </div>
-
-            {/* Switch: Official Poster vs Dynamic Amount QR */}
-            <div className="flex items-center justify-between bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
-              <button
-                type="button"
-                onClick={() => setQrDisplayMode('poster')}
-                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  qrDisplayMode === 'poster'
-                    ? 'bg-white text-[#0A2E5C] shadow-xs'
-                    : 'text-slate-500 hover:text-[#0A2E5C]'
-                }`}
-              >
-                Official PNB Standee
-              </button>
-              <button
-                type="button"
-                onClick={() => setQrDisplayMode('generator')}
-                className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  qrDisplayMode === 'generator'
-                    ? 'bg-white text-[#129E36] shadow-xs'
-                    : 'text-slate-500 hover:text-[#129E36]'
-                }`}
-              >
-                Custom Amount QR
-              </button>
-            </div>
-
-            {/* View A: Official PNB Standee Image from user's upload */}
-            {qrDisplayMode === 'poster' && (
-              <div className="space-y-4">
-                <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/70 flex flex-col items-center">
-                  <div className="max-w-[280px] sm:max-w-[320px] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md bg-white">
-                    <img 
-                      src="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg" 
-                      alt="PNB Merchant QR Code - Differently Abled Development Foundation" 
-                      className="w-full h-auto object-contain block"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between w-full max-w-[320px] mt-3 px-1 text-[11px]">
-                    <span className="text-slate-500 font-semibold">
-                      Merchant: <strong>DAD Foundation</strong>
-                    </span>
-                    <a
-                      href="/assets/aistudio/WhatsApp_Image_2026-11-06_at_2.30.52_PM_5a851e5a.jpeg"
-                      download="DAD_Foundation_PNB_QR.jpeg"
-                      className="text-[#129E36] hover:text-[#0E7F2B] font-bold inline-flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>Save QR</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* View B: Dynamic Amount Generator QR */}
-            {qrDisplayMode === 'generator' && (
-              <div className="space-y-4">
-                {/* Quick Amount Selector to Pre-fill QR code */}
-                <div className="space-y-2 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                      Select Amount to Pre-fill in QR (₹)
-                    </label>
-                    {validAmount && (
-                      <span className="text-xs font-black text-[#129E36]">
-                        ₹{validAmount.toLocaleString('en-IN')}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
-                    {presets.map((preset) => {
-                      const isSelected = selectedAmount === preset && !customAmount;
-                      return (
-                        <button
-                          key={preset}
-                          type="button"
-                          onClick={() => {
-                            setSelectedAmount(preset);
-                            setCustomAmount('');
-                          }}
-                          className={`py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            isSelected
-                              ? 'bg-[#129E36] text-white shadow-xs'
-                              : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/60'
-                          }`}
-                        >
-                          ₹{preset >= 1000 ? `${preset / 1000}k` : preset}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <div className="pt-1">
-                    <input
-                      type="number"
-                      placeholder="Or enter custom amount in INR"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      className="w-full bg-white border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold text-[#0A2E5C] outline-none focus:ring-2 focus:ring-[#129E36]"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-b from-white to-emerald-50/30 rounded-2xl border border-emerald-100 shadow-inner space-y-3">
-                  <div className="p-3 bg-white rounded-2xl border-2 border-slate-900/10 shadow-md">
-                    <QRCodeSVG
-                      value={upiUrl}
-                      size={180}
-                      level="H"
-                      includeMargin={true}
-                    />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs font-black text-[#0A2E5C]">
-                      Scan to Donate {validAmount ? `₹${validAmount.toLocaleString('en-IN')}` : 'Any Amount'}
-                    </p>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      UPI ID: {bankDetails.upiId}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+          </div>
 
             {/* UPI ID with One-Click Copy */}
             <div className="space-y-2">
@@ -329,12 +167,10 @@ For donations and enquiries: ${bankDetails.enquiryPhone}`;
               <span>Enquiries: <strong>{bankDetails.enquiryPhone}</strong></span>
             </div>
 
-          </div>
-        )}
+        </div>
 
         {/* CARD 2: BANK ACCOUNT DETAILS (PUNJAB NATIONAL BANK) */}
-        {(activeTab === 'all' || activeTab === 'bank') && (
-          <div className={`${activeTab === 'bank' ? 'lg:col-span-12 max-w-3xl mx-auto w-full' : 'lg:col-span-6'} bg-white rounded-3xl border-2 border-blue-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden`}>
+        <div className="lg:col-span-6 bg-white rounded-3xl border-2 border-blue-100 shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden">
             
             <div className="absolute top-0 right-0 bg-[#0A2E5C] text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
               NEFT • RTGS • IMPS • UPI
@@ -499,8 +335,7 @@ For donations and enquiries: ${bankDetails.enquiryPhone}`;
               </p>
             </div>
 
-          </div>
-        )}
+        </div>
 
       </div>
 
@@ -524,11 +359,11 @@ For donations and enquiries: ${bankDetails.enquiryPhone}`;
             +91 98333 21315
           </a>
           <a
-            href="mailto:info@dadfoundation.org"
+            href="mailto:dadfoundation.ngo@gmail.com"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white border border-slate-200 text-[#0A2E5C] font-bold hover:border-[#129E36] transition-colors"
           >
             <Mail className="w-3.5 h-3.5 text-[#129E36]" />
-            info@dadfoundation.org
+            dadfoundation.ngo@gmail.com
           </a>
         </div>
       </div>
